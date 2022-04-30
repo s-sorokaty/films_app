@@ -2,6 +2,7 @@
 from pymysql import Timestamp
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, JSON, VARCHAR, Float
 from repository import Base
+from sqlalchemy.orm import relationship
 from db_settings import engine
 from settings import get_settings
 
@@ -16,6 +17,7 @@ class session_info(Base):
     Date = Column(DateTime, nullable=True)
     startTime = Column(DateTime, nullable=True)
     endTime = Column(DateTime, nullable=True)  
+    children = relationship("ticketInfo")
 
 class hall_info(Base):
     __tablename__ = 'hallInfo'
@@ -61,11 +63,12 @@ class film_types(Base):
 class ticket_info(Base):
     __tablename__ = 'ticketInfo'
     idTransaction = Column(Integer, primary_key=True, nullable=True)
-    idSession = Column(Integer, nullable=True)
-    idClient = Column(Integer, nullable=True)
-    idEmployee = Column(Integer, nullable=True)
+    idSession = Column(Integer, ForeignKey('idSession.idSession'), nullable=True)
+    idClient = Column(Integer, ForeignKey('clientInfo.idClient'), nullable=True)
+    idEmployee = Column(Integer, ForeignKey('employeeInfo.idEmployee'), nullable=True)
     ticketCost = Column(Float, nullable=True)
-    endDate = Column(DateTime, nullable=True)  
+    endDate = Column(DateTime, nullable=True)
+    
 
 class client_info(Base):
     __tablename__ = 'clientInfo'
@@ -73,6 +76,7 @@ class client_info(Base):
     Name = Column(VARCHAR(50), nullable=True)
     Surname = Column(VARCHAR(50), nullable=True) 
     phoneNumber = Column(Integer, nullable=True)
+    children = relationship("ticketInfo")
 
 class employee_info(Base):
     __tablename__ = 'employeeInfo'
@@ -80,3 +84,4 @@ class employee_info(Base):
     Name = Column(VARCHAR(50), nullable=True)
     Surname = Column(VARCHAR(50), nullable=True) 
     phoneNumber = Column(Integer, nullable=True)
+    children = relationship("ticketInfo") 

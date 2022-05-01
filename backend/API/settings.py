@@ -7,8 +7,8 @@ class Settings(BaseSettings):
     MYSQL_PASSWORD: str
     MYSQL_ROOT_PASSWORD: str
     MYSQL_HOST: str
-    MYSQL_PORT:str
-    STAGE:str
+    MYSQL_PORT: str
+    STAGE: str
 
     class Config:
         env_file = ".env"

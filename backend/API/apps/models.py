@@ -1,29 +1,8 @@
 from sqlalchemy import Table, Column, ForeignKey, Integer, DateTime, VARCHAR, Float
 from sqlalchemy.orm import relationship
 from repository import Base
-
-from settings import get_settings
-
-
-settings = get_settings()
-
-
-class client_info(Base):
-    __tablename__ = 'clientInfo'
-    idClient = Column(Integer, primary_key=True, nullable=True)
-    Name = Column(VARCHAR(50), nullable=True)
-    Surname = Column(VARCHAR(50), nullable=True)
-    phoneNumber = Column(Integer, nullable=True)
-    children = relationship("ticketInfo")
-
-
-class employee_info(Base):
-    __tablename__ = 'employeeInfo'
-    idEmployee = Column(Integer, primary_key=True, nullable=True)
-    Name = Column(VARCHAR(50), nullable=True)
-    Surname = Column(VARCHAR(50), nullable=True)
-    phoneNumber = Column(Integer, nullable=True)
-    children = relationship("ticketInfo")
+from apps.client_routers.models import client_info
+from apps.employee_routers.models import employee_info
 
 
 class film_types(Base):
@@ -53,8 +32,8 @@ class place_info(Base):
 
 
 genre_on_film = Table('genreOnFilm', Base.metadata,
-                      Column('idFilm', ForeignKey('filmInfo.idFilm')),
-                      Column('idGenre', ForeignKey('filmTypes.idGenre'))
+                      Column('idFilm', ForeignKey('filmInfo.idFilm'), primary_key=True),
+                      Column('idGenre', ForeignKey('filmTypes.idGenre'), primary_key=True)
                       )
 
 
@@ -72,8 +51,8 @@ class film_info(Base):
 
 film_on_session = Table('filmOnSession', Base.metadata,
                         Column('idSession', ForeignKey(
-                            'sessionInfo.idSession')),
-                        Column('idFilm', ForeignKey('filmInfo.idFilm'))
+                            'sessionInfo.idSession'), primary_key=True),
+                        Column('idFilm', ForeignKey('filmInfo.idFilm'), primary_key=True)
                         )
 
 
@@ -95,12 +74,14 @@ class ticket_info(Base):
     idSession = Column(Integer, ForeignKey(
         'sessionInfo.idSession'), nullable=True)
     idClient = Column(Integer, ForeignKey(
-        'clientInfo.idClient'), nullable=True)
+        client_info.idClient), nullable=True)
     idEmployee = Column(Integer, ForeignKey(
-        'employeeInfo.idEmployee'), nullable=True)
+        employee_info.idEmployee), nullable=True)
     idHall = Column(Integer, ForeignKey(
         'hallInfo.idHall'), nullable=True)
     idPlace = Column(Integer, ForeignKey(
         'placeInfo.idPlace'), nullable=True)
     ticketCost = Column(Float, nullable=True)
     startTime = Column(DateTime, nullable=True)
+    parent = relationship(client_info, back_populates="children")
+    parent = relationship(employee_info, back_populates="children")

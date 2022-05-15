@@ -1,3 +1,3 @@
 start_project:
 	cp .example.env .env
-	poetry run python3 main.py
+	poetry run uvicorn main:app --reload

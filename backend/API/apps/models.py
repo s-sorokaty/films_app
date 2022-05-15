@@ -3,20 +3,14 @@ from sqlalchemy.orm import relationship
 from repository import Base
 from apps.client_routers.models import client_info
 from apps.employee_routers.models import employee_info
+from apps.age_rating.models import age_rating_type
+
 
 
 class film_types(Base):
     __tablename__ = 'filmTypes'
     idGenre = Column(Integer, primary_key=True, nullable=True)
     genreFilm = Column(Integer, nullable=True)
-
-
-class age_rating_type(Base):
-    __tablename__ = 'ageRatingType'
-    agerRaiting = Column(Integer, primary_key=True, nullable=True)
-    PGraiting = Column(VARCHAR(50), nullable=True)
-    minAge = Column(Integer, nullable=True)
-    description = Column(VARCHAR(255), nullable=True)
 
 
 class hall_info(Base):
@@ -43,7 +37,7 @@ class film_info(Base):
     typeFilm = Column(VARCHAR(50), nullable=True)
     nameFilm = Column(VARCHAR(50), nullable=True)
     ageRating = Column(Integer, ForeignKey(
-        'ageRatingType.agerRaiting'), nullable=True)
+        age_rating_type.ageRaiting), nullable=True)
     countryFilm = Column(VARCHAR(50), nullable=True)
     description = Column(VARCHAR(255), nullable=True)
     children = relationship("filmTypes", secondary=genre_on_film)

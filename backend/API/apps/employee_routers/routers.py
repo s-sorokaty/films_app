@@ -17,7 +17,7 @@ def get_db():
 
 
 @router.post('/', status_code=200)
-async def add_employee(employeer: shemas.employeer, response: Response, db: Session = Depends(get_db)):
+async def add_employee(employeer: shemas.employeer, db: Session = Depends(get_db)):
     try:
         crud.add_employee(employeer, db)
         return "OK"
@@ -26,7 +26,7 @@ async def add_employee(employeer: shemas.employeer, response: Response, db: Sess
 
 
 @router.delete('/')
-async def delete_employee(employeer: shemas.employeer, response: Response, db: Session = Depends(get_db)):
+async def delete_employee(employeer: shemas.employeer, db: Session = Depends(get_db)):
     try:
         crud.delete_employee(employeer, db)
         return "OK"
@@ -35,7 +35,7 @@ async def delete_employee(employeer: shemas.employeer, response: Response, db: S
 
 
 @router.put('/')
-async def update_employee(employeer: shemas.employeer, response: Response, db: Session = Depends(get_db)):
+async def update_employee(employeer: shemas.employeer, db: Session = Depends(get_db)):
     try:
         crud.update_employee(employeer, db)
         return "OK"
@@ -44,7 +44,7 @@ async def update_employee(employeer: shemas.employeer, response: Response, db: S
 
 
 @router.get('/')
-async def update_employee(response: Response, min:int = 0, max:int = 100, employeer: shemas.employeer = None, db: Session = Depends(get_db)):
+async def update_employee( min:int = 0, max:int = 100, employeer: shemas.employeer = None, db: Session = Depends(get_db)):
     try:
         return crud.get_employee(employeer, min, max, db)
     except:

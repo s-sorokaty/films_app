@@ -1,8 +1,10 @@
-from fastapi import Depends, APIRouter, Response, status
+from fastapi import Depends, APIRouter, Response, HTTPException
 from sqlalchemy.orm import Session
 from apps.repository import SessionLocal, engine
 
 from apps.employee_routers import crud, shemas
+
+
 router = APIRouter()
 
 
@@ -14,13 +16,37 @@ def get_db():
         db.close()
 
 
-@router.post('/')
-async def add_employee(employeer: shemas.employeer, db: Session = Depends(get_db)):
-    crud.add_employee(employeer, db)
-    return "ok"
+@router.post('/', status_code=200)
+async def add_employee(employeer: shemas.employeer, response: Response, db: Session = Depends(get_db)):
+    try:
+        crud.add_employee(employeer, db)
+        return "ok"
+    except KeyError:
+        raise HTTPException(status_code=500, detail="Server Error")
 
 
 @router.delete('/')
-async def delete_employee(employeer: shemas.employeer, db: Session = Depends(get_db)):
-    crud.delete_employee(employeer, db)
-    return "ok"
+async def delete_employee(employeer: shemas.employeer, response: Response, db: Session = Depends(get_db)):
+    try:
+        crud.delete_employee(employeer, db)
+        return "ok"
+    except KeyError:
+        raise HTTPException(status_code=500, detail="Server Error")
+
+
+@router.put('/')
+async def update_employee(employeer: shemas.employeer, response: Response, db: Session = Depends(get_db)):
+    try:
+        crud.update_employee(employeer, db)
+        return "ok"
+    except KeyError:
+        raise HTTPException(status_code=500, detail="Server Error")
+
+
+@router.get('/')
+async def update_employee(response: Response, min:int = 0, max:int = 100, employeer: shemas.employeer = None, db: Session = Depends(get_db)):
+    try:
+        return crud.get_employee(employeer, min, max, db)
+    except KeyError:
+        print(KeyError)
+        raise HTTPException(status_code=500, detail="Server Error")

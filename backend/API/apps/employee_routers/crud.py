@@ -46,7 +46,5 @@ def get_employee(employeer, min, max, db):
         return db.query(models.employee_info).filter(
             models.employee_info.idEmployee == employeer.idEmployee).first()
     else:
-
         return db.query(models.employee_info).filter(
             models.employee_info.idEmployee >= min, models.employee_info.idEmployee <= max).limit(5).all()
-            # .order_by(models.employee_info.idEmployee)

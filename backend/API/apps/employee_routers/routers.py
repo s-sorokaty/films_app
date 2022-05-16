@@ -20,8 +20,8 @@ def get_db():
 async def add_employee(employeer: shemas.employeer, response: Response, db: Session = Depends(get_db)):
     try:
         crud.add_employee(employeer, db)
-        return "ok"
-    except KeyError:
+        return "OK"
+    except:
         raise HTTPException(status_code=500, detail="Server Error")
 
 
@@ -29,8 +29,8 @@ async def add_employee(employeer: shemas.employeer, response: Response, db: Sess
 async def delete_employee(employeer: shemas.employeer, response: Response, db: Session = Depends(get_db)):
     try:
         crud.delete_employee(employeer, db)
-        return "ok"
-    except KeyError:
+        return "OK"
+    except:
         raise HTTPException(status_code=500, detail="Server Error")
 
 
@@ -38,8 +38,8 @@ async def delete_employee(employeer: shemas.employeer, response: Response, db: S
 async def update_employee(employeer: shemas.employeer, response: Response, db: Session = Depends(get_db)):
     try:
         crud.update_employee(employeer, db)
-        return "ok"
-    except KeyError:
+        return "OK"
+    except:
         raise HTTPException(status_code=500, detail="Server Error")
 
 
@@ -47,6 +47,5 @@ async def update_employee(employeer: shemas.employeer, response: Response, db: S
 async def update_employee(response: Response, min:int = 0, max:int = 100, employeer: shemas.employeer = None, db: Session = Depends(get_db)):
     try:
         return crud.get_employee(employeer, min, max, db)
-    except KeyError:
-        print(KeyError)
+    except:
         raise HTTPException(status_code=500, detail="Server Error")

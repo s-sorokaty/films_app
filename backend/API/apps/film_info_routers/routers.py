@@ -16,7 +16,7 @@ def get_db():
         db.close()
 
 
-@router.post('/', status_code=200)
+@router.post('/info', status_code=200)
 async def add_film(film: shemas.film, db: Session = Depends(get_db)):
     try:
         crud.add_film(film, db)
@@ -25,7 +25,7 @@ async def add_film(film: shemas.film, db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail="Server Error")
 
 
-@router.delete('/')
+@router.delete('/info')
 async def delete_film(film: shemas.film, db: Session = Depends(get_db)):
     try:
         crud.delete_film(film, db)
@@ -34,7 +34,7 @@ async def delete_film(film: shemas.film, db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail="Server Error")
 
 
-@router.put('/')
+@router.put('/info')
 async def update_film(film: shemas.film, db: Session = Depends(get_db)):
     try:
         crud.update_film(film, db)
@@ -43,9 +43,46 @@ async def update_film(film: shemas.film, db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail="Server Error")
 
 
-@router.get('/')
+@router.get('/info')
 async def get_film(film: shemas.film = None, db: Session = Depends(get_db)):
     try:
         return crud.get_film(film, db)
+    except:
+        raise HTTPException(status_code=500, detail="Server Error")
+
+
+
+
+@router.post('/genre', status_code=200)
+async def add_genre(film: shemas.genre_on_film, db: Session = Depends(get_db)):
+    try:
+        crud.add_genre(film, db)
+        return "OK"
+    except:
+        raise HTTPException(status_code=500, detail="Server Error")
+
+
+@router.delete('/genre')
+async def delete_genre(film: shemas.genre_on_film, db: Session = Depends(get_db)):
+    try:
+        crud.delete_genre(film, db)
+        return "OK"
+    except:
+        raise HTTPException(status_code=500, detail="Server Error")
+
+
+@router.put('/genre')
+async def update_film(film: shemas.genre_on_film, db: Session = Depends(get_db)):
+    try:
+        crud.update_genre(film, db)
+        return "OK"
+    except:
+        raise HTTPException(status_code=500, detail="Server Error")
+
+
+@router.get('/genre')
+async def get_film(film: shemas.genre_on_film = None, db: Session = Depends(get_db)):
+    try:
+        return crud.get_genre(film, db)
     except:
         raise HTTPException(status_code=500, detail="Server Error")

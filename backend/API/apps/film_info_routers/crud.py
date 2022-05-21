@@ -47,3 +47,45 @@ def get_film(film, db):
             models.film_film.idfilm == film.idfilm).first()
     else:
         return db.query(models.film_film).limit(5).all()
+
+def create_db_genre(genre):
+    return models.genre_on_film(
+        idFilm=genre.idFilm,
+        idGenre=genre.typeFilm
+    )
+
+
+def add_genre(genre, db):
+    db_genre = create_db_genre(genre)
+    db.add(db_genre)
+    db.commit()
+    db.refresh(db_genre)
+
+
+def delete_genre(genre, db):
+    db_genre = db.query(models.genre_on_film).filter(
+        models.genre_on_film.idFilm == genre.idFilm).first()
+    if type(db_genre) == models.film_film:
+        db.delete(db_genre)
+        db.commit()
+        return "OK"
+    else:
+        raise None
+
+
+def update_genre(genre, db):
+    db_genre = create_db_genre(genre)
+    db.query(models.genre_on_film).filter(
+        models.genre_on_film.idFilm == genre.idFilm)\
+        .update({'idFilm': genre.idFilm,
+                 'idGenre': genre.idGenre
+                 })
+    db.commit()
+
+
+def get_genre(genre, db):
+    if genre:
+        return db.query(models.genre_on_film).filter(
+            models.genre_on_film.idFilm == genre.idFilm).first()
+    else:
+        return db.query(models.genre_on_film).limit(5).all()

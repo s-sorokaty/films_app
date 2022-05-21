@@ -3,47 +3,16 @@ from sqlalchemy.orm import relationship
 from repository import Base
 from apps.client_routers.models import client_info
 from apps.employee_routers.models import employee_info
-from apps.age_rating_routers.models import age_rating_type
-from apps.film_genre_routers.models import film_genre
-
-
-class hall_info(Base):
-    __tablename__ = 'hallInfo'
-    idHall = Column(Integer, primary_key=True, nullable=True)
-    idPlace = Column(Integer, ForeignKey('placeInfo.idPlace'), nullable=True)
-
-
-class place_info(Base):
-    __tablename__ = 'placeInfo'
-    idPlace = Column(Integer, primary_key=True, nullable=True)
-    placeType = Column(VARCHAR(50), nullable=True)
-
-
-genre_on_film = Table('genreOnFilm', Base.metadata,
-                      Column('idFilm', ForeignKey(
-                          'filmInfo.idFilm'), primary_key=True),
-                      Column('idGenre', ForeignKey(
-                          film_genre.idGenre), primary_key=True)
-                      )
-
-
-class film_info(Base):
-    __tablename__ = 'filmInfo'
-    idFilm = Column(Integer, primary_key=True, nullable=True)
-    typeFilm = Column(VARCHAR(50), nullable=True)
-    nameFilm = Column(VARCHAR(50), nullable=True)
-    ageRating = Column(Integer, ForeignKey(
-        age_rating_type.ageRaiting), nullable=True)
-    countryFilm = Column(VARCHAR(50), nullable=True)
-    description = Column(VARCHAR(255), nullable=True)
-    children = relationship("filmTypes", secondary=genre_on_film)
+from apps.film_info_routers.models import film_info
+from apps.place_routers.models import place_info
+from apps.hall_routers.models import hall_info
 
 
 film_on_session = Table('filmOnSession', Base.metadata,
                         Column('idSession', ForeignKey(
                             'sessionInfo.idSession'), primary_key=True),
                         Column('idFilm', ForeignKey(
-                            'filmInfo.idFilm'), primary_key=True)
+                            film_info.idFilm), primary_key=True)
                         )
 
 
@@ -51,7 +20,7 @@ class session_info(Base):
     __tablename__ = 'sessionInfo'
     idSession = Column(Integer, primary_key=True, nullable=True)
     idHall = Column(Integer, ForeignKey(
-        'hallInfo.idHall'), nullable=True)
+        hall_info.idHall), nullable=True)
     Date = Column(DateTime, nullable=True)
     startTime = Column(DateTime, nullable=True)
     endTime = Column(DateTime, nullable=True)
@@ -69,9 +38,9 @@ class ticket_info(Base):
     idEmployee = Column(Integer, ForeignKey(
         employee_info.idEmployee), nullable=True)
     idHall = Column(Integer, ForeignKey(
-        'hallInfo.idHall'), nullable=True)
+       hall_info.idHall), nullable=True)
     idPlace = Column(Integer, ForeignKey(
-        'placeInfo.idPlace'), nullable=True)
+        place_info.idPlace), nullable=True)
     ticketCost = Column(Float, nullable=True)
     startTime = Column(DateTime, nullable=True)
     parent = relationship(client_info, back_populates="children")

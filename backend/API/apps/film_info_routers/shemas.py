@@ -8,3 +8,8 @@ class film(BaseModel):
     ageRating: int = None
     countryFilm: str = None
     description: str = None
+
+
+class genre_on_film(BaseModel):
+    idFilm: int
+    idGenre: int

@@ -3,14 +3,8 @@ from sqlalchemy.orm import relationship
 from repository import Base
 from apps.client_routers.models import client_info
 from apps.employee_routers.models import employee_info
-from apps.age_rating.models import age_rating_type
-
-
-
-class film_types(Base):
-    __tablename__ = 'filmTypes'
-    idGenre = Column(Integer, primary_key=True, nullable=True)
-    genreFilm = Column(Integer, nullable=True)
+from apps.age_rating_routers.models import age_rating_type
+from apps.film_genre_routers.models import film_genre
 
 
 class hall_info(Base):
@@ -26,8 +20,10 @@ class place_info(Base):
 
 
 genre_on_film = Table('genreOnFilm', Base.metadata,
-                      Column('idFilm', ForeignKey('filmInfo.idFilm'), primary_key=True),
-                      Column('idGenre', ForeignKey('filmTypes.idGenre'), primary_key=True)
+                      Column('idFilm', ForeignKey(
+                          'filmInfo.idFilm'), primary_key=True),
+                      Column('idGenre', ForeignKey(
+                          film_genre.idGenre), primary_key=True)
                       )
 
 
@@ -46,7 +42,8 @@ class film_info(Base):
 film_on_session = Table('filmOnSession', Base.metadata,
                         Column('idSession', ForeignKey(
                             'sessionInfo.idSession'), primary_key=True),
-                        Column('idFilm', ForeignKey('filmInfo.idFilm'), primary_key=True)
+                        Column('idFilm', ForeignKey(
+                            'filmInfo.idFilm'), primary_key=True)
                         )
 
 

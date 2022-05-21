@@ -5,4 +5,4 @@ from apps.repository import Base
 class film_genre(Base):
     __tablename__ = 'filmGenre'
     idGenre = Column(Integer, primary_key=True, nullable=True)
-    genreFilm = Column(Integer, nullable=True)
+    genreFilm = Column(VARCHAR(30), nullable=True)

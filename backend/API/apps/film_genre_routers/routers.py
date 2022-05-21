@@ -44,8 +44,8 @@ async def update_genre(genre: shemas.genre, db: Session = Depends(get_db)):
 
 
 @router.get('/')
-async def get_genre( min:int = 0, max:int = 100, genre: shemas.genre = None, db: Session = Depends(get_db)):
+async def get_genre(genre: shemas.genre = None, db: Session = Depends(get_db)):
     try:
-        return crud.get_genre(genre, min, max, db)
+        return crud.get_genre(genre, db)
     except:
         raise HTTPException(status_code=500, detail="Server Error")

@@ -31,9 +31,11 @@ def delete_employee(employeer, db):
 
 def update_employee(employeer, db):
     db_employeer = create_db_emploeer(employeer)
-    db.query(models.employee_info).filter(
-        models.employee_info.idEmployee == employeer.idEmployee)\
-        .update({'idEmployee': db_employeer.idEmployee,
+    res = db.query(models.employee_info).filter(
+        models.employee_info.idEmployee == employeer.idEmployee)
+    if res.first() == None:
+        raise 
+    res.update({'idEmployee': db_employeer.idEmployee,
                  'Name': db_employeer.Name,
                  'Surname': db_employeer.Surname,
                  'phoneNumber': db_employeer.phoneNumber

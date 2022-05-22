@@ -51,5 +51,16 @@ export const API = {
             body:JSON.stringify(body)
         })
 
+    },
+    post: async (path, body) => {
+        debugger
+        return fetch(path, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+            },
+            body:JSON.stringify(body)
+        })
+
     }
 }

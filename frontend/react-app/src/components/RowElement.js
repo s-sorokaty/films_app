@@ -34,8 +34,24 @@ function RowElement(props) {
   const deleteItem = () => {
     API.delete(props.apiPath, getDBObj())
   }
+  const addItem = () => {
+    debugger
+    API.post(props.apiPath, getDBObj())
+  }
 
   return (
+    (props.isNew) ?
+    <div className="elemContainer">
+        {data.map((obj, key) => <input 
+        onChange={(e) => {
+          const newData = lodash.cloneDeep(data)
+          newData[key] = e.target.value
+          setData(newData)
+        }} 
+        className="coloumn" key={key} value={data[key]}></input>)}
+        <button onClick={()=>{addItem()}} className="manageButton">apply</button>
+      </div>
+    :
     !editState ?
       <div className="elemContainer">
         {data.map((obj, key) => <div className="coloumn" key={key}>{obj} </div>)}
@@ -44,8 +60,9 @@ function RowElement(props) {
       </div> :
       <div className="elemContainer">
         {data.map((obj, key) => <input onChange={(e) => {
+          debugger
           const newData = lodash.cloneDeep(data)
-          newData[data.indexOf(data[key])] = e.target.value
+          newData[key] = e.target.value
           setData(newData)
         }} className="coloumn" key={key} value={data[key]}></input>)}
         <button onClick={() => {

@@ -2,4 +2,4 @@
 volumes
 __pycache__
 .vscode
-node_moduls
+node_modules

@@ -34,16 +34,17 @@ def update_employee(employeer, db):
     res = db.query(models.employee_info).filter(
         models.employee_info.idEmployee == employeer.idEmployee)
     if res.first() == None:
-        raise 
+        raise
     res.update({'idEmployee': db_employeer.idEmployee,
-                 'Name': db_employeer.Name,
-                 'Surname': db_employeer.Surname,
-                 'phoneNumber': db_employeer.phoneNumber
-                 })
+                'Name': db_employeer.Name,
+                'Surname': db_employeer.Surname,
+                'phoneNumber': db_employeer.phoneNumber
+                })
     db.commit()
 
 
 def get_employee(employeer, min, max, db):
+
     if employeer:
         return db.query(models.employee_info).filter(
             models.employee_info.idEmployee == employeer.idEmployee).first()

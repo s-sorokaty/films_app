@@ -49,3 +49,10 @@ async def get_age_raiting(age_raiting: shemas.age_rating_type = None, db: Sessio
         return crud.get_age_raiting(age_raiting, db)
     except:
         raise HTTPException(status_code=500, detail="Server Error")
+
+@router.get('/coloums')
+async def get_coloums(db: Session = Depends(get_db)):
+    try:
+        return crud.get_columns_descriptions(db)
+    except:
+        raise HTTPException(status_code=500, detail="Server Error")

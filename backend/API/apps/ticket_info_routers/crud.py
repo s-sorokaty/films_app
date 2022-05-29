@@ -51,3 +51,6 @@ def get_ticket(ticket, db):
             models.ticket_info.idTransaction == ticket.idTransaction).first()
     else:
         return db.query(models.ticket_info).limit(500).all()
+        
+def get_columns_descriptions(db):
+    return db.query(models.place_info).statement.columns.keys()

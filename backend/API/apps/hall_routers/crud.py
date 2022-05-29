@@ -42,3 +42,6 @@ def get_place(place, db):
             models.hall_info.idHall == place.idHall).first()
     else:
         return db.query(models.hall_info).limit(5).all()
+
+def get_columns_descriptions(db):
+    return db.query(models.hall_info).statement.columns.keys()

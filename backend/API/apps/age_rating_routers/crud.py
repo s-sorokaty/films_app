@@ -46,3 +46,6 @@ def get_age_raiting(age_raiting, db):
             models.age_rating_type.ageRaiting == age_raiting.ageRaiting).first()
     else:
         return db.query(models.age_rating_type).limit(100).all()
+
+def get_columns_descriptions(db):
+    return db.query(models.age_rating_type).statement.columns.keys()

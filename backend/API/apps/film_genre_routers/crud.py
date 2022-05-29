@@ -43,3 +43,6 @@ def get_genre(genre, db):
             models.film_genre.idGenre == genre.idGenre).first()
     else:
         return db.query(models.film_genre).limit(5).all()
+
+def get_columns_descriptions(db):
+    return db.query(models.film_genre).statement.columns.keys()

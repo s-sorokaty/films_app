@@ -1,4 +1,6 @@
 from sqlalchemy.orm import Session
+from sqlalchemy import desc
+
 from apps.client_routers import shemas, models
 
 
@@ -43,8 +45,11 @@ def update_client(client, db):
 
 def get_client(client, min, max, db):
     if client:
-        return db.query(models.client_info).filter(
-            models.client_info.idClient == client.idClient).first()
+        return db.query(models.client_info).get(client.idClient)
     else:
         return db.query(models.client_info).filter(
-            models.client_info.idClient >= min, models.client_info.idClient <= max).limit(5).all()
+            models.client_info.idClient >= min, models.client_info.idClient <= max).order_by(models.client_info.idClient).limit(100).all()
+
+
+def get_columns_descriptions(db):
+    return db.query(models.client_info).statement.columns.keys()

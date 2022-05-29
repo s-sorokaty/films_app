@@ -3,9 +3,6 @@ from sqlalchemy import Table, Column, ForeignKey, Integer, DateTime, VARCHAR, Fl
 from apps.repository import Base
 
 
-
-
-
 class client_info(Base):
     __tablename__ = 'clientInfo'
     idClient = Column(Integer, primary_key=True, nullable=True)

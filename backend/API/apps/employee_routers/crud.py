@@ -51,3 +51,7 @@ def get_employee(employeer, min, max, db):
     else:
         return db.query(models.employee_info).filter(
             models.employee_info.idEmployee >= min, models.employee_info.idEmployee <= max).limit(5).all()
+            
+
+def get_columns_descriptions(db):
+    return db.query(models.employee_info).statement.columns.keys()

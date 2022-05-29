@@ -21,9 +21,9 @@ def add_film(film, db):
 
 
 def delete_film(film, db):
-    db_film = db.query(models.film_film).filter(
-        models.film_film.idfilm == film.idfilm).first()
-    if type(db_film) == models.film_film:
+    db_film = db.query(models.film_info).filter(
+        models.film_info.idfilm == film.idfilm).first()
+    if type(db_film) == models.film_info:
         db.delete(db_film)
         db.commit()
         return "OK"
@@ -33,8 +33,8 @@ def delete_film(film, db):
 
 def update_film(film, db):
     db_film = create_db_film(film)
-    db.query(models.film_film).filter(
-        models.film_film.idfilm == film.idfilm)\
+    db.query(models.film_info).filter(
+        models.film_info.idfilm == film.idfilm)\
         .update({'idfilm': db_film.idfilm,
                  'filmFilm': db_film.filmFilm
                  })
@@ -43,10 +43,10 @@ def update_film(film, db):
 
 def get_film(film, db):
     if film:
-        return db.query(models.film_film).filter(
-            models.film_film.idfilm == film.idfilm).first()
+        return db.query(models.film_info).filter(
+            models.film_info.idfilm == film.idfilm).first()
     else:
-        return db.query(models.film_film).limit(5).all()
+        return db.query(models.film_info).limit(5).all()
 
 def create_db_genre(genre):
     return models.genre_on_film(
@@ -65,7 +65,7 @@ def add_genre(genre, db):
 def delete_genre(genre, db):
     db_genre = db.query(models.genre_on_film).filter(
         models.genre_on_film.idFilm == genre.idFilm).first()
-    if type(db_genre) == models.film_film:
+    if type(db_genre) == models.film_info:
         db.delete(db_genre)
         db.commit()
         return "OK"
@@ -89,3 +89,10 @@ def get_genre(genre, db):
             models.genre_on_film.idFilm == genre.idFilm).first()
     else:
         return db.query(models.genre_on_film).limit(5).all()
+
+def get_film_columns_descriptions(db):
+    return db.query(models.film_info).statement.columns.keys()
+
+def get_genre_columns_descriptions(db):
+    return db.query(models.genre_on_film).statement.columns.keys()
+

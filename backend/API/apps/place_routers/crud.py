@@ -43,3 +43,6 @@ def get_place(place, db):
             models.place_info.idPlace == place.idPlace).first()
     else:
         return db.query(models.place_info).limit(5).all()
+
+def get_columns_descriptions(db):
+    return db.query(models.place_info).statement.columns.keys()

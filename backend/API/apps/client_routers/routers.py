@@ -47,5 +47,13 @@ async def update_client(client: shemas.client, db: Session = Depends(get_db)):
 async def get_client( min:int = 0, max:int = 100, client: shemas.client = None, db: Session = Depends(get_db)):
     try:
         return crud.get_client(client, min, max, db)
+    except KeyError:
+        print(KeyError)
+        raise HTTPException(status_code=500, detail="Server Error")
+
+@router.get('/coloums')
+async def get_coloums(db: Session = Depends(get_db)):
+    try:
+        return crud.get_columns_descriptions(db)
     except:
         raise HTTPException(status_code=500, detail="Server Error")

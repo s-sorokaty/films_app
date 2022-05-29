@@ -47,7 +47,8 @@ async def update_film(film: shemas.film, db: Session = Depends(get_db)):
 async def get_film(film: shemas.film = None, db: Session = Depends(get_db)):
     try:
         return crud.get_film(film, db)
-    except:
+    except KeyError:
+        print(KeyError)
         raise HTTPException(status_code=500, detail="Server Error")
 
 
@@ -84,5 +85,19 @@ async def update_film(film: shemas.genre_on_film, db: Session = Depends(get_db))
 async def get_film(film: shemas.genre_on_film = None, db: Session = Depends(get_db)):
     try:
         return crud.get_genre(film, db)
+    except:
+        raise HTTPException(status_code=500, detail="Server Error")
+
+@router.get('/info/coloums')
+async def get_coloums(db: Session = Depends(get_db)):
+    try:
+        return crud.get_film_columns_descriptions(db)
+    except:
+        raise HTTPException(status_code=500, detail="Server Error")
+
+@router.get('/genre/coloums')
+async def get_coloums(db: Session = Depends(get_db)):
+    try:
+        return crud.get_genre_columns_descriptions(db)
     except:
         raise HTTPException(status_code=500, detail="Server Error")

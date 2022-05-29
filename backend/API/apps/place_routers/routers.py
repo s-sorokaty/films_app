@@ -50,3 +50,10 @@ async def get_place(place: shemas.place = None, db: Session = Depends(get_db)):
         return crud.get_place(place, db)
     except:
         raise HTTPException(status_code=500, detail="Server Error")
+
+@router.get('/coloums')
+async def get_coloums(db: Session = Depends(get_db)):
+    try:
+        return crud.get_columns_descriptions(db)
+    except:
+        raise HTTPException(status_code=500, detail="Server Error")

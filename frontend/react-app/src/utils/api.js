@@ -2,13 +2,17 @@ const path = 'http://localhost:8000/'
 
 export const apiPATH = {
     employee: path + 'employee/',
-    client: path + 'client',
-    ageRaiting: path + 'age-raiting',
-    filmGenre: path + 'film-genre',
-    filmInfo: path + 'film-info/info',
-    genreOnFilm: path + 'film-info/genre',
-    place: path + 'place',
-    ticketInfo: path + 'ticket-info'
+    client: path + 'client/',
+    ageRaiting: path + 'age-raiting/',
+    filmGenre: path + 'film-genre/',
+    filmInfo: path + 'film-info/info/',
+    genreOnFilm: path + 'film-info/genre/',
+    place: path + 'place/',
+    ticketInfo: path + 'ticket-info/'
+}
+
+export const apiSecondPATH ={
+    coloums: 'coloums'
 }
 
 export const apiSelector = [
@@ -40,7 +44,6 @@ export const API = {
             },
             body:JSON.stringify(body)
         })
-
     },
     delete: async (path, body) => {
         return fetch(path, {
@@ -53,7 +56,6 @@ export const API = {
 
     },
     post: async (path, body) => {
-        debugger
         return fetch(path, {
             method: 'POST',
             headers: {

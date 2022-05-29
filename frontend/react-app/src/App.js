@@ -1,35 +1,65 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import RowElement from './components/RowElement';
+import RowElement from './components/row/RowElement';
 import Select from 'react-select';
-import { apiPATH, apiSelector, API } from './utils/api';
+import { apiPATH, apiSelector, API, apiSecondPATH } from './utils/api';
+import Notification from './components/notification/Notification';
 
 
 function App() {
   const [data, setData] = useState([])
-  const [selectedOption, setSelectedOption] = useState({ label: '', isSearching: false })
+  const [coloums, setColoums] = useState([])
+  const [selectedOption, setSelectedOption] = useState({ label: '' })
   const [newElems, setNewElems] = useState([])
+  const [isRefrashing, setIsRefrash] = useState(false)
+  const [isShowNotification, setIsShowNotification] = useState(false)
+  const [textNotification, setTextNotification] = useState('')
 
-  useEffect(() => {
-    console.log('apiResolve')
-    if (!!selectedOption.isSearching) {
+  const showNotification = (text, timeout) => {
+    setIsShowNotification(true)
+    setTextNotification(text)
+    setTimeout(() => {
+      setIsShowNotification(false)
+    }, timeout)
+  }
+
+  const getColoums = () => {
+    if (!!selectedOption.value)
+      API.get(apiPATH[selectedOption.value] + apiSecondPATH.coloums).then((res) => {
+        return res.json()
+      }).then(res => {
+        if (Array.isArray(res)) setColoums(res)
+        else setColoums([])
+      }).catch(e => {
+        setColoums([])
+        showNotification(e.message, 3000)
+      })
+  }
+  const refreshList = () => {
+    console.log('refraash')
+    if (!!selectedOption.value)
       API.get(apiPATH[selectedOption.value]).then(res => {
         return res.json()
-      }).then(async res => {
-        if (Array.isArray(res)) {
-          setData(res)
-          setNewElems([])
-          setSelectedOption({ ...selectedOption, isSearching: false })
-        }
-        else
-          throw new Error("Bad format of data");
-      }).catch(res => {
-        setData([])
-        setSelectedOption({ ...selectedOption, isSearching: false })
       })
+        .then(async res => {
+          if (Array.isArray(res)) {
+            setData(res)
+            setSelectedOption({ ...selectedOption })
+          }
+          else setData([])
+        }).catch(e => {
+          setData([])
+          setSelectedOption({ ...selectedOption })
+          showNotification(e.message, 3000)
+        })
+  }
 
-    }
-  })
+  useEffect(() => {
+    setIsRefrash(false)
+    setData([])
+    getColoums()
+    refreshList()
+  }, [isRefrashing])
 
   return (
     <div className="wrap">
@@ -37,39 +67,37 @@ function App() {
       </div>
       <div className='main'>
         <div className='elemScreen'>
-          <div className='header'>{data[0] ? Object.keys(data[0]).map((coloumn, key) => <div key={key}>{coloumn}</div>) : ''}</div>
-          {data.map((obj, key) => <RowElement apiPath={apiPATH[selectedOption.value]} isEditing={false} props={obj} key={key} />)}
-          {newElems.map((obj, key) => <RowElement apiPath={apiPATH[selectedOption.value]} props={obj} isNew={true} key={key}></RowElement>
+          <div className='header'>{coloums.map((coloumn, key) => <div key={key}>{coloumn}</div>)}</div>
+          {data.map((obj, key) => <RowElement apiPath={apiPATH[selectedOption.value]} coloums={coloums} showNotification={showNotification} refrash={setIsRefrash} isEditing={false} isNew={false} data={obj} key={key} />)}
+          {newElems.map((obj, key) => <RowElement apiPath={apiPATH[selectedOption.value]} coloums={coloums} showNotification={showNotification} refrash={setIsRefrash} data={obj} isNew={true} key={key}></RowElement>
           )}
         </div>
         <div className='userBar'>
           <button className='manageButton' onClick={() => {
-            debugger
             console.log(data)
           }}> check data</button>
-          <button className='manageButton' onClick={() => { setData([]) }}> clear list</button>
           <button className='manageButton' onClick={() => {
-            if (!!data[0]) {
-              let elem = {}
-              for (let i of Object.keys(data[0])) {
-                elem[i] = ''
-              }
-              setNewElems([elem])
-            }
+            const emptyObj = {}
+            coloums.map(obj => emptyObj[obj] = '')
+            if (!!coloums.length)
+              setNewElems([emptyObj])
           }}> add elems</button>
           <div className='manageInfo'> current state is {selectedOption.label}</div>
           <Select
             defaultValue={selectedOption}
             onChange={(option) => {
               setData([])
-              setSelectedOption({ ...option, isSearching: true })
+
+              setIsRefrash(true)
+              setSelectedOption({ ...option })
+              setNewElems([])
             }}
             options={apiSelector}
             className='manageSelector'
           ></Select>
-
         </div>
       </div>
+      <Notification isShowing={isShowNotification} text={textNotification}></Notification>
     </div>
   );
 }

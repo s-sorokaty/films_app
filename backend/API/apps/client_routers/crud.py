@@ -1,6 +1,4 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import desc
-
 from apps.client_routers import shemas, models
 
 

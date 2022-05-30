@@ -36,7 +36,6 @@ function App() {
       })
   }
   const refreshList = () => {
-    console.log('refraash')
     if (!!selectedOption.value)
       API.get(apiPATH[selectedOption.value]).then(res => {
         return res.json()
@@ -56,7 +55,6 @@ function App() {
 
   useEffect(() => {
     setIsRefrash(false)
-    setData([])
     getColoums()
     refreshList()
   }, [isRefrashing])
@@ -87,7 +85,6 @@ function App() {
             defaultValue={selectedOption}
             onChange={(option) => {
               setData([])
-
               setIsRefrash(true)
               setSelectedOption({ ...option })
               setNewElems([])

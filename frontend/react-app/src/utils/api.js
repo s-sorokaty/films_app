@@ -15,6 +15,17 @@ export const apiSecondPATH ={
     coloums: 'coloums'
 }
 
+export const selectableColoums = [
+    {coloum: 'idClient', apiPATH: ''},
+    {coloum: 'idEmployee', apiPATH: ''},
+    {coloum: 'idHall', apiPATH: ''},
+    {coloum: 'idPlace', apiPATH: ''},
+    {coloum: 'ageRaiting', apiPATH: ''},
+    {coloum: 'idGenre', apiPATH: ''},
+    {coloum: 'idFilm', apiPATH: ''},
+    {coloum: 'idSession', apiPATH: ''}
+]
+
 export const apiSelector = [
     {value: 'employee', label: 'Employee', isSearching:false},
     {value: 'client', label: 'Client', isSearching:false},

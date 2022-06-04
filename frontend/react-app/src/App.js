@@ -4,6 +4,7 @@ import RowElement from './components/row/RowElement';
 import Select from 'react-select';
 import { apiPATH, apiSelector, API, apiSecondPATH } from './utils/api';
 import Notification from './components/notification/Notification';
+import { translate } from './utils/translate';
 
 
 function App() {
@@ -61,11 +62,14 @@ function App() {
 
   return (
     <div className="wrap">
-      <div className='header'>
+      <div className='mainHeader'>
+        <div className='mainName'>Приложения для бронирования управления кинотеатром.</div>
       </div>
       <div className='main'>
         <div className='elemScreen'>
-          <div className='header'>{coloums.map((coloumn, key) => <div key={key}>{coloumn}</div>)}</div>
+          <div className='header'>{coloums.map((coloumn, key) => {
+            return <div className='coloumnName' key={key}>{translate[coloumn]}</div>
+          })}</div>
           {data.map((obj, key) => <RowElement apiPath={apiPATH[selectedOption.value]} coloums={coloums} showNotification={showNotification} refrash={setIsRefrash} isEditing={false} isNew={false} data={obj} key={key} />)}
           {newElems.map((obj, key) => <RowElement apiPath={apiPATH[selectedOption.value]} coloums={coloums} showNotification={showNotification} refrash={setIsRefrash} data={obj} isNew={true} key={key}></RowElement>
           )}
@@ -80,7 +84,7 @@ function App() {
             if (!!coloums.length)
               setNewElems([emptyObj])
           }}> add elems</button>
-          <div className='manageInfo'> current state is {selectedOption.label}</div>
+          <div className='manageInfo'>{selectedOption.label}</div>
           <Select
             defaultValue={selectedOption}
             onChange={(option) => {

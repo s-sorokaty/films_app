@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './RowElement.css';
-import { API } from '../../utils/api';
+import { API, selectableColoums } from '../../utils/api';
+import SelectableElem from './SelectableElem/SelectableElem';
 
 function RowElement(props) {
   const [editState, setEditState] = useState(props.isEditing)
@@ -32,6 +33,7 @@ function RowElement(props) {
     })
   }
   const addItem = () => {
+    console.log(data)
     API.post(props.apiPath, data).then(res => {
       checkResponce(res)
       props.refrash(true)
@@ -41,9 +43,12 @@ function RowElement(props) {
   return (
     (props.isNew) ?
       <div className="elemContainer">
-        {props.coloums.map((obj, key) => <input onChange={(e) => { setData({ ...data, [e.target.name]: e.target.value }) }}
-          className="coloumn" name={obj} key={key} value={data[obj]}></input>)}
-        <button onClick={() => { addItem() }} className="manageButton">apply</button>
+        {props.coloums.map((obj, key) => {
+          if (!!selectableColoums[obj] && props.apiPath != selectableColoums[obj]) return <SelectableElem coloumn={props.coloums} name={obj} setValue={(elem) => { setData({ ...data, [elem.name]: elem.value }) }} className="coloumn" key={key} value={data[obj]}></SelectableElem>
+          return <input onChange={(e) => { setData({ ...data, [e.target.name]: e.target.value }) }}
+            className="coloumn" name={obj} key={key} value={data[obj]}></input>
+        })}
+        <button onClick={() => { addItem() }} className="manageButton">Подтвердить</button>
       </div>
       :
       !editState ?
@@ -54,11 +59,13 @@ function RowElement(props) {
           <button onClick={() => setEditState(true)} className="manageButton">edit</button>
         </div> :
         <div className="elemContainer">
-          {props.coloums.map((obj, key) =>
-            <input
+          {props.coloums.map((obj, key) => {
+            if (!!selectableColoums[obj] && props.apiPath != selectableColoums[obj]) return <SelectableElem coloumn={props.coloums} name={obj} setValue={(elem) => { setData({ ...data, [elem.name]: elem.value }) }} className="coloumn" key={key} value={data[obj]}></SelectableElem>
+            return <input
               onChange={(e) => { setData({ ...data, [e.target.name]: e.target.value }) }}
               className="coloumn" key={key} name={obj} value={data[obj]}>
             </input>
+          }
           )}
           <button onClick={() => {
             updateItem()

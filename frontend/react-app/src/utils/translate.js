@@ -1,0 +1,26 @@
+export const translate = {
+    idClient: 'ID клиента',
+    idEmployee: 'ID работника',
+    Name: 'Имя',
+    Surname: 'Фамилия',
+    phoneNumber: 'Номер телефона',
+    ageRaiting: 'Возрастной рейтинг',
+    PGraiting: 'Рейтинг по системе PG',
+    minAge: 'Минимальный возвраст',
+    description: 'Описание',
+    idGenre: 'ID жанра',
+    genreFilm: 'Название жанра',
+    idPlace:'ID места',
+    placeType:'Тип места',
+    idFilm:'ID фильма',
+    typeFilm:'Тип фильма',
+    nameFilm:'Название',
+    ageRating:'Возрастной рейтинг',
+    countryFilm:'Страна',
+    ticketCost:'Цена за билет',
+    idSession:'ID сессии',
+    idTransaction:'ID транзакции',
+    startTime:'Время начала',
+    idHall:'ID зала'
+
+}

@@ -8,33 +8,37 @@ export const apiPATH = {
     filmInfo: path + 'film-info/info/',
     genreOnFilm: path + 'film-info/genre/',
     place: path + 'place/',
-    ticketInfo: path + 'ticket-info/'
+    ticketInfo: path + 'ticket-info/',
+    hall: path+ 'hall/'
 }
 
-export const apiSecondPATH ={
+export const apiSecondPATH = {
     coloums: 'coloums'
 }
 
-export const selectableColoums = [
-    {coloum: 'idClient', apiPATH: ''},
-    {coloum: 'idEmployee', apiPATH: ''},
-    {coloum: 'idHall', apiPATH: ''},
-    {coloum: 'idPlace', apiPATH: ''},
-    {coloum: 'ageRaiting', apiPATH: ''},
-    {coloum: 'idGenre', apiPATH: ''},
-    {coloum: 'idFilm', apiPATH: ''},
-    {coloum: 'idSession', apiPATH: ''}
-]
+export const selectableColoums = {
+    idClient: apiPATH.client,
+    idEmployee: apiPATH.employee,
+    idPlace: apiPATH.place,
+    ageRaiting: apiPATH.ageRaiting,
+    idGenre: apiPATH.filmGenre,
+    idFilm: apiPATH.filmInfo,
+    idHall: apiPATH.hall
+    // idHall:apiPATH,
+    // idSession:apiPATH,
+}
 
 export const apiSelector = [
-    {value: 'employee', label: 'Employee', isSearching:false},
-    {value: 'client', label: 'Client', isSearching:false},
-    {value: 'ageRaiting', label: 'AgeRaiting', isSearching:false},
-    {value: 'filmGenre', label: 'FilmGenre', isSearching:false},
-    {value: 'filmInfo', label: 'FilmInfo', isSearching:false},
-    {value: 'genreOnFilm', label: 'GenreOnFilm', isSearching:false},
-    {value: 'place', label: 'Place', isSearching:false},
-    {value: 'ticketInfo', label: 'TicketInfo', isSearching:false}
+    { value: 'employee', label: 'Работники', isSearching: false },
+    { value: 'client', label: 'Клиенты', isSearching: false },
+    { value: 'ageRaiting', label: 'Возврастной рейтинг', isSearching: false },
+    { value: 'filmGenre', label: 'Жанры', isSearching: false },
+    { value: 'filmInfo', label: 'Информация о фильме', isSearching: false },
+    { value: 'genreOnFilm', label: 'Жанры в фильме', isSearching: false },
+    { value: 'place', label: 'Места', isSearching: false },
+    { value: 'ticketInfo', label: 'Информация о билете', isSearching: false },
+    { value: 'hall', label: 'Настройка зала', isSearching: false },
+    
 ]
 export const API = {
     get: async (path, body = undefined) => {
@@ -44,7 +48,8 @@ export const API = {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json;charset=utf-8',
             },
-        })
+            body
+        }, )
 
     },
     update: async (path, body) => {
@@ -53,7 +58,7 @@ export const API = {
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
             },
-            body:JSON.stringify(body)
+            body: JSON.stringify(body)
         })
     },
     delete: async (path, body) => {
@@ -62,7 +67,7 @@ export const API = {
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
             },
-            body:JSON.stringify(body)
+            body: JSON.stringify(body)
         })
 
     },
@@ -72,7 +77,7 @@ export const API = {
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
             },
-            body:JSON.stringify(body)
+            body: JSON.stringify(body)
         })
 
     }

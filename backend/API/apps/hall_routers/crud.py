@@ -1,45 +1,46 @@
 from sqlalchemy.orm import Session
 from apps.hall_routers import shemas, models
 
-def create_db_place(place):
+def create_db_hall(hall):
     return models.hall_info(
-        idHall=place.idHall,
-        idPlace=place.idPlace
+        idHall=hall.idHall,
+        idPlace=hall.idPlace
     )
 
 
-def add_place(place, db):
-    db_place = create_db_place(place)
-    db.add(db_place)
+def add_hall(hall, db):
+    print(hall)
+    db_hall = create_db_hall(hall)
+    db.add(db_hall)
     db.commit()
-    db.refresh(db_place)
+    db.refresh(db_hall)
 
 
-def delete_place(place, db):
-    db_place = db.query(models.hall_info).filter(
-        models.hall_info.idHall == place.idHall).first()
-    if type(db_place) == models.hall_info:
-        db.delete(db_place)
+def delete_hall(hall, db):
+    db_hall = db.query(models.hall_info).filter(
+        models.hall_info.idHall == hall.idHall).first()
+    if type(db_hall) == models.hall_info:
+        db.delete(db_hall)
         db.commit()
         return "OK"
     else:
         raise None
 
 
-def update_place(place, db):
-    db_place = create_db_place(place)
+def update_hall(hall, db):
+    db_hall = create_db_hall(hall)
     db.query(models.hall_info).filter(
-        models.hall_info.idPlace == place.idPlace)\
-        .update({'idHall': db_place.idHall,
-                 'idPlace': db_place.idPlace
+        models.hall_info.idhall == hall.idhall)\
+        .update({'idHall': db_hall.idHall,
+                 'idhall': db_hall.idhall
                  })
     db.commit()
 
 
-def get_place(place, db):
-    if place:
+def get_hall(hall, db):
+    if hall:
         return db.query(models.hall_info).filter(
-            models.hall_info.idHall == place.idHall).first()
+            models.hall_info.idHall == hall.idHall).first()
     else:
         return db.query(models.hall_info).limit(5).all()
 

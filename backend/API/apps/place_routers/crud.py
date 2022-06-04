@@ -38,11 +38,14 @@ def update_place(place, db):
 
 
 def get_place(place, db):
-    if place:
-        return db.query(models.place_info).filter(
-            models.place_info.idPlace == place.idPlace).first()
-    else:
-        return db.query(models.place_info).limit(5).all()
-
+    query_db =  db.query(models.place_info)
+    for key in place:
+        if key[1]:
+            print(getattr(models.place_info, key[0]), key[1])
+            query_db = query_db.filter(
+                getattr(models.place_info, key[0]) == key[1]
+            )
+    return query_db.all() 
+    
 def get_columns_descriptions(db):
     return db.query(models.place_info).statement.columns.keys()

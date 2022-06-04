@@ -9,6 +9,7 @@ from apps.age_rating_routers.routers import router as age_rating_routers
 from apps.film_genre_routers.routers import router as film_genre_routers
 from apps.film_info_routers.routers import router as film_info_routers
 from apps.place_routers.routers import router as place_routers
+from apps.hall_routers.routers import router as hall_routers
 from apps.ticket_info_routers.routers import router as ticket_info_routers
 
 
@@ -50,6 +51,7 @@ def get_main_script(request: Request):
 
 
 app.include_router(employee_routers, prefix="/employee", tags=["employee"])
+app.include_router(hall_routers, prefix="/hall", tags=["hall_routers"])
 app.include_router(client_routers, prefix="/client", tags=["client"])
 app.include_router(age_rating_routers,
                    prefix="/age-raiting", tags=["age-raiting"])

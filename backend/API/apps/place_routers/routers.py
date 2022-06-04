@@ -1,4 +1,4 @@
-from fastapi import Depends, APIRouter, Response, HTTPException
+from fastapi import Depends, APIRouter, Response, HTTPException, Depends
 from sqlalchemy.orm import Session
 from apps.repository import SessionLocal, engine
 
@@ -45,10 +45,12 @@ async def update_place(place: shemas.place, db: Session = Depends(get_db)):
 
 
 @router.get('/')
-async def get_place(place: shemas.place = None, db: Session = Depends(get_db)):
+async def get_place(place: shemas.place = Depends(), db: Session = Depends(get_db)):
+    print(place)
     try:
         return crud.get_place(place, db)
-    except:
+    except KeyError:
+        print(KeyError)
         raise HTTPException(status_code=500, detail="Server Error")
 
 @router.get('/coloums')

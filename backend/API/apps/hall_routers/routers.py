@@ -21,7 +21,8 @@ async def add_hall(hall: shemas.hall, db: Session = Depends(get_db)):
     try:
         crud.add_hall(hall, db)
         return "OK"
-    except:
+    except KeyError:
+        print(KeyError)
         raise HTTPException(status_code=500, detail="Server Error")
 
 

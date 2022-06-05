@@ -2,7 +2,7 @@ from fastapi import Depends, APIRouter, Response, HTTPException, Depends
 from sqlalchemy.orm import Session
 from apps.repository import SessionLocal, engine
 
-from apps.place_routers import crud, shemas
+from apps.session_info_routers import crud, shemas
 
 
 router = APIRouter()
@@ -16,45 +16,86 @@ def get_db():
         db.close()
 
 
-@router.post('/', status_code=200)
-async def add_place(place: shemas.place, db: Session = Depends(get_db)):
+@router.post('session/', status_code=200)
+async def add_session(session_info: shemas.session_info, db: Session = Depends(get_db)):
     try:
-        crud.add_place(place, db)
+        crud.add_session_info(session_info, db)
+        return "OK"
+    except:
+        raise HTTPException(status_code=500, detail="Server Error")
+
+
+@router.delete('session/')
+async def delete_session_info(session_info: shemas.session_info, db: Session = Depends(get_db)):
+    try:
+        crud.delete_session_info(session_info, db)
+        return "OK"
+    except:
+        raise HTTPException(status_code=500, detail="Server Error")
+
+
+@router.put('session/')
+async def update_session_info(session_info: shemas.session_info, db: Session = Depends(get_db)):
+    try:
+        crud.update_session_info(session_info, db)
+        return "OK"
+    except:
+        raise HTTPException(status_code=500, detail="Server Error")
+
+
+@router.get('session/')
+async def get_session_info(session_info: shemas.session_info = Depends(), db: Session = Depends(get_db)):
+    try:
+        return crud.get_session_info(session_info, db)
+    except:
+        raise HTTPException(status_code=500, detail="Server Error")
+
+@router.get('session/coloums')
+async def get_coloums(db: Session = Depends(get_db)):
+    try:
+        return crud.get_columns_descriptions_session_info(db)
+    except:
+        raise HTTPException(status_code=500, detail="Server Error")
+
+
+@router.post('session-film/', status_code=200)
+async def add_film_on_session(film_on_session: shemas.film_on_session, db: Session = Depends(get_db)):
+    try:
+        crud.add_film_on_session(film_on_session, db)
         return "OK"
     except KeyError:
         print(KeyError)
         raise HTTPException(status_code=500, detail="Server Error")
 
 
-@router.delete('/')
-async def delete_place(place: shemas.place, db: Session = Depends(get_db)):
+@router.delete('session-film/')
+async def delete_film_on_session(film_on_session: shemas.film_on_session, db: Session = Depends(get_db)):
     try:
-        crud.delete_place(place, db)
+        crud.delete_film_on_session(film_on_session, db)
         return "OK"
     except:
         raise HTTPException(status_code=500, detail="Server Error")
 
 
-@router.put('/')
-async def update_place(place: shemas.place, db: Session = Depends(get_db)):
+@router.put('session-film/')
+async def update_film_on_session(film_on_session: shemas.film_on_session, db: Session = Depends(get_db)):
     try:
-        crud.update_place(place, db)
+        crud.update_film_on_session(film_on_session, db)
         return "OK"
     except:
         raise HTTPException(status_code=500, detail="Server Error")
 
 
-@router.get('/')
-async def get_place(place: shemas.place = Depends(), db: Session = Depends(get_db)):
-    print(place)
+@router.get('session-film/')
+async def get_film_on_session(film_on_session: shemas.film_on_session = Depends(), db: Session = Depends(get_db)):
     try:
-        return crud.get_place(place, db)
+        return crud.get_film_on_session(film_on_session, db)
     except:
         raise HTTPException(status_code=500, detail="Server Error")
 
-@router.get('/coloums')
+@router.get('session-film/coloums')
 async def get_coloums(db: Session = Depends(get_db)):
     try:
-        return crud.get_columns_descriptions(db)
+        return crud.get_columns_descriptions_film_on_session(db)
     except:
         raise HTTPException(status_code=500, detail="Server Error")

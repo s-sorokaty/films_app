@@ -1,53 +1,104 @@
 from sqlalchemy.orm import Session
-from apps.place_routers import shemas, models
+from apps.session_info_routers import shemas, models
 
 
-def create_db_place(place):
-    return models.place_info(
-        idPlace=place.idPlace,
-        idHall=place.idHall,
-        placeType=place.placeType
+def create_session_info(session_info):
+    return models.session_info(
+        idSession=session_info.idPlace,
+        idHall=session_info.idHall,
+        Date=session_info.Date,
+        startTime=session_info.startTime,
+        endTime=session_info.endTime,
     )
 
-
-def add_place(place, db):
-    db_place = create_db_place(place)
-    db.add(db_place)
+def add_session_info(session_info, db):
+    db_session_info = create_session_info(session_info)
+    db.add(db_session_info)
     db.commit()
-    db.refresh(db_place)
+    db.refresh(db_session_info)
 
 
-def delete_place(place, db):
-    db_place = db.query(models.place_info).filter(
-        models.place_info.idPlace == place.idPlace).first()
-    if type(db_place) == models.place_info:
-        db.delete(db_place)
+def delete_session_info(session_info, db):
+    db_session_info = db.query(models.session_info).filter(
+        models.session_info.idSession == session_info.idSession).first()
+    if type(db_session_info) == models.session_info:
+        db.delete(db_session_info)
         db.commit()
         return "OK"
     else:
         raise None
 
 
-def update_place(place, db):
-    db_place = create_db_place(place)
-    db.query(models.place_info).filter(
-        models.place_info.idPlace == place.idPlace)\
-        .update({'idPlace': db_place.idPlace,
+def update_session_info(session_info, db):
+    db_place = create_session_info(session_info)
+    db.query(models.session_info).filter(
+        models.session_info.idSession == session_info.idSession)\
+        .update({'idSession': db_place.idSession,
                 'idHall':db_place.idHall,
-                 'placeType': db_place.placeType
+                 'Date': db_place.Date,
+                 'startTime': db_place.startTime,
+                 'endTime': db_place.endTime,
                  })
     db.commit()
 
 
-def get_place(place, db):
-    query_db =  db.query(models.place_info)
-    for key in place:
+def get_session_info(session_info, db):
+    query_db =  db.query(models.session_info)
+    for key in session_info:
         if key[1]:
-            print(getattr(models.place_info, key[0]), key[1])
+            print(getattr(models.session_info, key[0]), key[1])
             query_db = query_db.filter(
-                getattr(models.place_info, key[0]) == key[1]
+                getattr(models.session_info, key[0]) == key[1]
             )
     return query_db.all() 
     
-def get_columns_descriptions(db):
-    return db.query(models.place_info).statement.columns.keys()
+def get_columns_descriptions_session_info(db):
+    return db.query(models.session_info).statement.columns.keys()
+
+
+
+def create_film_on_session(film_on_session):
+    return models.film_on_session(
+        idSession=film_on_session.idSession,
+        idFilm=film_on_session.idFilm,
+    )
+
+def add_film_on_session(film_on_session, db):
+    db_film_on_session = create_film_on_session(film_on_session)
+    db.add(db_film_on_session)
+    db.commit()
+    db.refresh(db_film_on_session)
+
+
+def delete_film_on_session(film_on_session, db):
+    db_film_on_session = db.query(models.film_on_session).filter(
+        models.film_on_session.idSession == film_on_session.idSession).first()
+    if type(db_film_on_session) == models.film_on_session:
+        db.delete(db_film_on_session)
+        db.commit()
+        return "OK"
+    else:
+        raise None
+
+
+def update_film_on_session(film_on_session, db):
+    db_film_on_session = create_film_on_session(film_on_session)
+    db.query(models.film_on_session).filter(
+        models.film_on_session.idSession == film_on_session.idSession)\
+        .update({'idSession': db_film_on_session.idSession,
+                'idFilm':db_film_on_session.idFilm,
+                 })
+    db.commit()
+
+
+def get_film_on_session(film_on_session, db):
+    query_db =  db.query(models.film_on_session)
+    for key in film_on_session:
+        if key[1]:
+            query_db = query_db.filter(
+                getattr(models.film_on_session, key[0]) == key[1]
+            )
+    return query_db.all() 
+    
+def get_columns_descriptions_film_on_session(db):
+    return db.query(models.film_on_session).statement.columns.keys()

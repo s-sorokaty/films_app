@@ -11,7 +11,7 @@ from apps.film_info_routers.routers import router as film_info_routers
 from apps.place_routers.routers import router as place_routers
 from apps.hall_routers.routers import router as hall_routers
 from apps.ticket_info_routers.routers import router as ticket_info_routers
-
+from apps.session_info_routers.routers import router as session_info_routers
 
 import routers as psql_db
 
@@ -61,3 +61,5 @@ app.include_router(film_info_routers, prefix="/film-info", tags=["film-info"])
 app.include_router(place_routers, prefix="/place", tags=["place"])
 app.include_router(ticket_info_routers,
                    prefix="/ticket-info", tags=["ticket-info"])
+app.include_router(session_info_routers,
+                   prefix="/session-info", tags=["ticket-info"])

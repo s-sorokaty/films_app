@@ -5,7 +5,7 @@ class film(BaseModel):
     idFilm: int = None
     typeFilm: str = None
     nameFilm: str = None
-    ageRating: int = None
+    ageRaiting: int = None
     countryFilm: str = None
     description: str = None
 

@@ -16,16 +16,17 @@ def get_db():
         db.close()
 
 
-@router.post('session/', status_code=200)
+@router.post('/session', status_code=200)
 async def add_session(session_info: shemas.session_info, db: Session = Depends(get_db)):
     try:
         crud.add_session_info(session_info, db)
         return "OK"
-    except:
+    except KeyError:
+        print(KeyError)
         raise HTTPException(status_code=500, detail="Server Error")
 
 
-@router.delete('session/')
+@router.delete('/session')
 async def delete_session_info(session_info: shemas.session_info, db: Session = Depends(get_db)):
     try:
         crud.delete_session_info(session_info, db)
@@ -34,7 +35,7 @@ async def delete_session_info(session_info: shemas.session_info, db: Session = D
         raise HTTPException(status_code=500, detail="Server Error")
 
 
-@router.put('session/')
+@router.put('/session')
 async def update_session_info(session_info: shemas.session_info, db: Session = Depends(get_db)):
     try:
         crud.update_session_info(session_info, db)
@@ -43,14 +44,14 @@ async def update_session_info(session_info: shemas.session_info, db: Session = D
         raise HTTPException(status_code=500, detail="Server Error")
 
 
-@router.get('session/')
+@router.get('/session')
 async def get_session_info(session_info: shemas.session_info = Depends(), db: Session = Depends(get_db)):
     try:
         return crud.get_session_info(session_info, db)
     except:
         raise HTTPException(status_code=500, detail="Server Error")
 
-@router.get('session/coloums')
+@router.get('/session/coloums')
 async def get_coloums(db: Session = Depends(get_db)):
     try:
         return crud.get_columns_descriptions_session_info(db)
@@ -58,7 +59,7 @@ async def get_coloums(db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail="Server Error")
 
 
-@router.post('session-film/', status_code=200)
+@router.post('/session-film', status_code=200)
 async def add_film_on_session(film_on_session: shemas.film_on_session, db: Session = Depends(get_db)):
     try:
         crud.add_film_on_session(film_on_session, db)
@@ -68,7 +69,7 @@ async def add_film_on_session(film_on_session: shemas.film_on_session, db: Sessi
         raise HTTPException(status_code=500, detail="Server Error")
 
 
-@router.delete('session-film/')
+@router.delete('/session-film')
 async def delete_film_on_session(film_on_session: shemas.film_on_session, db: Session = Depends(get_db)):
     try:
         crud.delete_film_on_session(film_on_session, db)
@@ -77,7 +78,7 @@ async def delete_film_on_session(film_on_session: shemas.film_on_session, db: Se
         raise HTTPException(status_code=500, detail="Server Error")
 
 
-@router.put('session-film/')
+@router.put('/session-film')
 async def update_film_on_session(film_on_session: shemas.film_on_session, db: Session = Depends(get_db)):
     try:
         crud.update_film_on_session(film_on_session, db)
@@ -86,14 +87,14 @@ async def update_film_on_session(film_on_session: shemas.film_on_session, db: Se
         raise HTTPException(status_code=500, detail="Server Error")
 
 
-@router.get('session-film/')
+@router.get('/session-film')
 async def get_film_on_session(film_on_session: shemas.film_on_session = Depends(), db: Session = Depends(get_db)):
     try:
         return crud.get_film_on_session(film_on_session, db)
     except:
         raise HTTPException(status_code=500, detail="Server Error")
 
-@router.get('session-film/coloums')
+@router.get('/session-film/coloums')
 async def get_coloums(db: Session = Depends(get_db)):
     try:
         return crud.get_columns_descriptions_film_on_session(db)

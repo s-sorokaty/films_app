@@ -62,4 +62,4 @@ app.include_router(place_routers, prefix="/place", tags=["place"])
 app.include_router(ticket_info_routers,
                    prefix="/ticket-info", tags=["ticket-info"])
 app.include_router(session_info_routers,
-                   prefix="/session-info", tags=["ticket-info"])
+                   prefix="/session-info", tags=["session-info"])

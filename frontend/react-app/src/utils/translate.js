@@ -21,6 +21,6 @@ export const translate = {
     idSession:'ID сессии',
     idTransaction:'ID транзакции',
     startTime:'Время начала',
-    idHall:'ID зала'
-
+    idHall:'ID зала',
+    endTime:'Время окончания'
 }

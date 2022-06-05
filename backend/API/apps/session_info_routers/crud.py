@@ -1,14 +1,14 @@
 from sqlalchemy.orm import Session
+from datetime import datetime
 from apps.session_info_routers import shemas, models
 
 
 def create_session_info(session_info):
     return models.session_info(
-        idSession=session_info.idPlace,
+        idSession=session_info.idSession,
         idHall=session_info.idHall,
-        Date=session_info.Date,
-        startTime=session_info.startTime,
-        endTime=session_info.endTime,
+        startTime=datetime.fromtimestamp(session_info.startTime) ,
+        endTime=datetime.fromtimestamp(session_info.endTime),
     )
 
 def add_session_info(session_info, db):
@@ -57,10 +57,10 @@ def get_columns_descriptions_session_info(db):
 
 
 
-def create_film_on_session(film_on_session):
+def create_film_on_session(film_session):
     return models.film_on_session(
-        idSession=film_on_session.idSession,
-        idFilm=film_on_session.idFilm,
+        idSession=film_session.idSession,
+        idFilm=film_session.idFilm,
     )
 
 def add_film_on_session(film_on_session, db):

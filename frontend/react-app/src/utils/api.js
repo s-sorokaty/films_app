@@ -9,7 +9,9 @@ export const apiPATH = {
     genreOnFilm: path + 'film-info/genre/',
     place: path + 'place/',
     ticketInfo: path + 'ticket-info/',
-    hall: path+ 'hall/'
+    hall: path+ 'hall/',
+    sessionInfo: path + 'session-info/session/',
+    filmOnSession: path + 'session-info/session-film/'
 }
 
 export const apiSecondPATH = {
@@ -24,21 +26,23 @@ export const selectableColoums = {
     idGenre: apiPATH.filmGenre,
     idFilm: apiPATH.filmInfo,
     idHall: apiPATH.hall,
+    idSession:apiPATH.sessionInfo,
     startTime:'DATE',
-    // idHall:apiPATH,
-    // idSession:apiPATH,
+    endTime:'DATE'
 }
 
 export const apiSelector = [
-    { value: 'employee', label: 'Работники', isSearching: false },
-    { value: 'client', label: 'Клиенты', isSearching: false },
+    { value: 'employee', label: 'Управление Работниками', isSearching: false },
+    { value: 'client', label: 'Управление Клиентами', isSearching: false },
     { value: 'ageRaiting', label: 'Возврастной рейтинг', isSearching: false },
     { value: 'filmGenre', label: 'Жанры', isSearching: false },
     { value: 'filmInfo', label: 'Информация о фильме', isSearching: false },
     { value: 'genreOnFilm', label: 'Жанры в фильме', isSearching: false },
     { value: 'place', label: 'Места', isSearching: false },
     { value: 'ticketInfo', label: 'Информация о билете', isSearching: false },
-    { value: 'hall', label: 'Настройка зала', isSearching: false },
+    { value: 'hall', label: 'Настройка залов', isSearching: false },
+    { value: 'sessionInfo', label: 'Управление сессиями', isSearching: false },
+    { value: 'filmOnSession', label: 'Настройка фильмов на сессии', isSearching: false },
     
 ]
 export const API = {

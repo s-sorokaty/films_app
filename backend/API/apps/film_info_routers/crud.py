@@ -4,12 +4,12 @@ from apps.film_info_routers import shemas, models
 
 def create_db_film(film):
     return models.film_info(
-        idfilm=film.idfilm,
+        idFilm=film.idFilm,
         typeFilm=film.typeFilm,
-        ageRating=film.ageRating,
+        nameFilm=film.nameFilm,
+        ageRaiting=film.ageRaiting,
         countryFilm=film.countryFilm,
         description=film.description,
-        children=film.children
     )
 
 
@@ -22,7 +22,7 @@ def add_film(film, db):
 
 def delete_film(film, db):
     db_film = db.query(models.film_info).filter(
-        models.film_info.idfilm == film.idfilm).first()
+        models.film_info.idFilm == film.idFilm).first()
     if type(db_film) == models.film_info:
         db.delete(db_film)
         db.commit()
@@ -34,9 +34,13 @@ def delete_film(film, db):
 def update_film(film, db):
     db_film = create_db_film(film)
     db.query(models.film_info).filter(
-        models.film_info.idfilm == film.idfilm)\
-        .update({'idfilm': db_film.idfilm,
-                 'filmFilm': db_film.filmFilm
+        models.film_info.idFilm == film.idFilm)\
+        .update({'idFilm': db_film.idFilm,
+                 'typeFilm': db_film.typeFilm,
+                 'nameFilm': db_film.nameFilm,
+                 'ageRaiting': db_film.ageRaiting,
+                 'countryFilm': db_film.countryFilm,
+                 'description': db_film.description,
                  })
     db.commit()
 
@@ -54,7 +58,7 @@ def get_film(film, db):
 def create_db_genre(genre):
     return models.genre_on_film(
         idFilm=genre.idFilm,
-        idGenre=genre.typeFilm
+        idGenre=genre.idGenre
     )
 
 

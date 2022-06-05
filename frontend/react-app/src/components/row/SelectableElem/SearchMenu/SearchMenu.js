@@ -41,7 +41,6 @@ function SearchMenu(props) {
         {searchResult.map(res => {
         let resObj = []
         props.coloumns.map((coloumn, key) => resObj.push(<div onClick={()=>{
-
         }} className='elem' key={key}>{res[coloumn]}</div>))
         return <div className='resultObj' onClick={(e) => {
           props.setValue({

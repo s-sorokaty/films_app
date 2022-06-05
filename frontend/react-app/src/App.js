@@ -55,6 +55,7 @@ function App() {
   }
 
   useEffect(() => {
+    setData([])
     setIsRefrash(false)
     getColoums()
     refreshList()
@@ -75,9 +76,6 @@ function App() {
           )}
         </div>
         <div className='userBar'>
-          {/* <button className='manageButton' onClick={() => {
-            console.log(data)
-          }}> check data</button> */}
           <button className='addButton' onClick={() => {
             const emptyObj = {}
             coloums.map(obj => emptyObj[obj] = '')

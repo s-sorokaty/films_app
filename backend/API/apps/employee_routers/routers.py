@@ -21,7 +21,7 @@ async def add_employee(employeer: shemas.employeer, db: Session = Depends(get_db
     try:
         crud.add_employee(employeer, db)
         return "OK"
-    except:
+    except KeyError:
         raise HTTPException(status_code=500, detail="Server Error")
 
 

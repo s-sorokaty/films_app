@@ -32,7 +32,7 @@ function SelectableElem(props) {
 
   return (<>
     {(selectableColoums[props.name] == 'DATE')
-      ? <input id="datetime" type="datetime-local" onChange={(e) => { setData(toTimestamp(e.target.value)) }} ></input>
+      ? <input id="datetime" type="datetime-local" onChange={(e) => { setData(e.target.value) } } value={props.value}></input>
       : <><input onClick={() => setIsActive(!isActive)} onChange={()=>{console.log(props.value)}} value={props.value}></input>
         <SearchMenu setIsActive = {()=>{setIsActive()}} setValue={(elem) => props.setValue(elem)} isActive={isActive} coloumns={coloumns} name={props.name}></SearchMenu>
       </>

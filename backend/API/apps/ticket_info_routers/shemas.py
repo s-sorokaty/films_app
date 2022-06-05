@@ -9,4 +9,4 @@ class ticket(BaseModel):
     idHall: int = None
     idPlace: int = None
     ticketCost: float = None
-    startTime: int = None
+    startTime: datetime = None

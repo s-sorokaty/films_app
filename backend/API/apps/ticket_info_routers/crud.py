@@ -11,7 +11,7 @@ def create_db_ticket(ticket):
         idHall=ticket.idHall,
         idPlace=ticket.idPlace,
         ticketCost=ticket.ticketCost,
-        startTime=datetime.fromtimestamp(ticket.startTime),
+        startTime=ticket.startTime,
     )
 
 

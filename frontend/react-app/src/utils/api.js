@@ -52,6 +52,7 @@ export const API = {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json;charset=utf-8',
+
             },
             body
         }, )
@@ -61,6 +62,7 @@ export const API = {
         return fetch(path, {
             method: 'PUT',
             headers: {
+                'Accept': 'application/json',
                 'Content-Type': 'application/json;charset=utf-8',
             },
             body: JSON.stringify(body)
@@ -70,6 +72,7 @@ export const API = {
         return fetch(path, {
             method: 'DELETE',
             headers: {
+                'Accept': 'application/json',
                 'Content-Type': 'application/json;charset=utf-8',
             },
             body: JSON.stringify(body)
@@ -80,6 +83,7 @@ export const API = {
         return fetch(path, {
             method: 'POST',
             headers: {
+                'Accept': 'application/json',
                 'Content-Type': 'application/json;charset=utf-8',
             },
             body: JSON.stringify(body)

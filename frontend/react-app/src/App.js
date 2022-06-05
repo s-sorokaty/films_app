@@ -8,6 +8,7 @@ import { translate } from './utils/translate';
 
 
 function App() {
+
   const [data, setData] = useState([])
   const [coloums, setColoums] = useState([])
   const [selectedOption, setSelectedOption] = useState({ label: '' })
@@ -24,18 +25,6 @@ function App() {
     }, timeout)
   }
 
-  const getColoums = () => {
-    if (!!selectedOption.value)
-      API.get(apiPATH[selectedOption.value] + apiSecondPATH.coloums).then((res) => {
-        return res.json()
-      }).then(res => {
-        if (Array.isArray(res)) setColoums(res)
-        else setColoums([])
-      }).catch(e => {
-        setColoums([])
-        showNotification(e.message, 3000)
-      })
-  }
   const refreshList = () => {
     if (!!selectedOption.value)
       API.get(apiPATH[selectedOption.value]).then(res => {
@@ -53,6 +42,28 @@ function App() {
           showNotification(e.message, 3000)
         })
   }
+  const getColoums = () => {
+    if (!!selectedOption.value)
+      API.get(apiPATH[selectedOption.value] + apiSecondPATH.coloums).then((res) => {
+        return res.json()
+      }).then(res => {
+        if (Array.isArray(res)) setColoums(res)
+        else setColoums([])
+      }).catch(e => {
+        setColoums([])
+        showNotification(e.message, 3000)
+      })
+  }
+  const sort = (coloumn) => {
+    let newDate = [...data]
+    console.log(data)
+    console.log(newDate.sort((a, b) => {
+      if (a[coloumn] > b[coloumn])
+        return -1
+    }))
+    setData([])
+    setData(newDate)
+  }
 
   useEffect(() => {
     setData([])
@@ -69,7 +80,7 @@ function App() {
       <div className='main'>
         <div className='elemScreen'>
           <div className='header'>{coloums.map((coloumn, key) => {
-            return <div className='coloumnName' key={key}>{translate[coloumn]}</div>
+            return <div className='coloumnName' onClick={() => { sort(coloumn) }} key={key}>{translate[coloumn]}</div>
           })}</div>
           {data.map((obj, key) => <RowElement apiPath={apiPATH[selectedOption.value]} coloums={coloums} showNotification={showNotification} refrash={setIsRefrash} isEditing={false} isNew={false} data={obj} key={key} />)}
           {newElems.map((obj, key) => <RowElement apiPath={apiPATH[selectedOption.value]} coloums={coloums} showNotification={showNotification} refrash={setIsRefrash} data={obj} isNew={true} key={key}></RowElement>

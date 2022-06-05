@@ -8,13 +8,13 @@ function RowElement(props) {
   const [data, setData] = useState(props.data)
 
   const checkResponce = (res) => {
-    if (res.status == 200) {
+    if (res.status === 200) {
       props.showNotification('Successful', 2000)
     }
-    if (res.status == 422) {
+    if (res.status === 422) {
       props.showNotification('Unprocessable Entity', 2000)
     }
-    if (res.status == 500) {
+    if (res.status === 500) {
       props.showNotification('Somethink went wrong', 2000)
     }
   }
@@ -23,6 +23,8 @@ function RowElement(props) {
     API.update(props.apiPath, data).then(res => {
       checkResponce(res)
       props.refrash(true)
+    }).catch(e=>{
+
     })
 
   }
@@ -30,6 +32,8 @@ function RowElement(props) {
     API.delete(props.apiPath, data).then(res => {
       checkResponce(res)
       props.refrash(true)
+    }).catch(e=>{
+
     })
   }
   const addItem = () => {
@@ -37,6 +41,8 @@ function RowElement(props) {
     API.post(props.apiPath, data).then(res => {
       checkResponce(res)
       props.refrash(true)
+    }).catch(e=>{
+
     })
   }
 

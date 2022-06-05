@@ -16,6 +16,7 @@ function App() {
   const [isRefrashing, setIsRefrash] = useState(false)
   const [isShowNotification, setIsShowNotification] = useState(false)
   const [textNotification, setTextNotification] = useState('')
+  const [selectors, setSelectors] = useState({})
 
   const showNotification = (text, timeout) => {
     setIsShowNotification(true)
@@ -26,8 +27,18 @@ function App() {
   }
 
   const refreshList = () => {
+    let query = '?'
+    coloums.map(coloumn=>{
+      if (!!selectors[coloumn]){
+        query += coloumn + '=' + selectors[coloumn] + '&'
+        setData([])
+      }
+    })
+    if (query.length === 1){
+      query=''
+    }
     if (!!selectedOption.value)
-      API.get(apiPATH[selectedOption.value]).then(res => {
+      API.get(apiPATH[selectedOption.value] + query).then(res => {
         return res.json()
       })
         .then(async res => {
@@ -103,10 +114,24 @@ function App() {
               setIsRefrash(true)
               setSelectedOption({ ...option })
               setNewElems([])
+              setSelectors({})
             }}
             options={apiSelector}
             className='manageSelector'
           ></Select>
+          <div className='filterElement'>
+          {coloums.map(((obj, key) => {
+          return <div className = 'searchInput' key={key}><input  onChange={(e)=>{
+            setSelectors({...selectors, [obj]:e.target.value})
+          }} placeholder={translate[obj]} value={selectors[obj]}></input></div>
+        }))}
+        <button className='searchInput' onClick={()=>{refreshList()}}>Найти</button>
+        <button className='searchInput' onClick={()=>{
+          console.log(selectors)
+          console.log(data)
+          
+          }}>Селекторы</button>
+          </div>
         </div>
       </div>
       <Notification isShowing={isShowNotification} text={textNotification}></Notification>

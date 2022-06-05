@@ -63,7 +63,7 @@ function App() {
   return (
     <div className="wrap">
       <div className='mainHeader'>
-        <div className='mainName'>Приложения для бронирования управления кинотеатром.</div>
+        <div className='mainName'>Приложения для управления кинотеатром.</div>
       </div>
       <div className='main'>
         <div className='elemScreen'>
@@ -75,15 +75,15 @@ function App() {
           )}
         </div>
         <div className='userBar'>
-          <button className='manageButton' onClick={() => {
+          {/* <button className='manageButton' onClick={() => {
             console.log(data)
-          }}> check data</button>
-          <button className='manageButton' onClick={() => {
+          }}> check data</button> */}
+          <button className='addButton' onClick={() => {
             const emptyObj = {}
             coloums.map(obj => emptyObj[obj] = '')
             if (!!coloums.length)
               setNewElems([emptyObj])
-          }}> add elems</button>
+          }}> Добавить запись</button>
           <div className='manageInfo'>{selectedOption.label}</div>
           <Select
             defaultValue={selectedOption}

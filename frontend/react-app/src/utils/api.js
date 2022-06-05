@@ -23,7 +23,8 @@ export const selectableColoums = {
     ageRaiting: apiPATH.ageRaiting,
     idGenre: apiPATH.filmGenre,
     idFilm: apiPATH.filmInfo,
-    idHall: apiPATH.hall
+    idHall: apiPATH.hall,
+    startTime:'DATE',
     // idHall:apiPATH,
     // idSession:apiPATH,
 }

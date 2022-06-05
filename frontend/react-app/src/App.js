@@ -80,7 +80,9 @@ function App() {
       <div className='main'>
         <div className='elemScreen'>
           <div className='header'>{coloums.map((coloumn, key) => {
-            return <div className='coloumnName' onClick={() => { sort(coloumn) }} key={key}>{translate[coloumn]}</div>
+            return <div className='coloumnName' onClick={() => { 
+              // sort(coloumn) 
+            }} key={key}>{translate[coloumn]}</div>
           })}</div>
           {data.map((obj, key) => <RowElement apiPath={apiPATH[selectedOption.value]} coloums={coloums} showNotification={showNotification} refrash={setIsRefrash} isEditing={false} isNew={false} data={obj} key={key} />)}
           {newElems.map((obj, key) => <RowElement apiPath={apiPATH[selectedOption.value]} coloums={coloums} showNotification={showNotification} refrash={setIsRefrash} data={obj} isNew={true} key={key}></RowElement>

@@ -44,7 +44,7 @@ async def update_film(film: shemas.film, db: Session = Depends(get_db)):
 
 
 @router.get('/info')
-async def get_film(film: shemas.film = None, db: Session = Depends(get_db)):
+async def get_film(film: shemas.film = Depends(), db: Session = Depends(get_db)):
     try:
         return crud.get_film(film, db)
     except KeyError:
@@ -82,7 +82,7 @@ async def update_film(film: shemas.genre_on_film, db: Session = Depends(get_db))
 
 
 @router.get('/genre')
-async def get_film(film: shemas.genre_on_film = None, db: Session = Depends(get_db)):
+async def get_film(film: shemas.genre_on_film = Depends(), db: Session = Depends(get_db)):
     try:
         return crud.get_genre(film, db)
     except:

@@ -2,5 +2,5 @@ from pydantic import BaseModel
 
 
 class genre(BaseModel):
-    idGenre: int
+    idGenre: int = None
     genreFilm: str = None

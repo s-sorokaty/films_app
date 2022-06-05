@@ -44,9 +44,9 @@ async def update_employee(employeer: shemas.employeer, db: Session = Depends(get
 
 
 @router.get('/')
-async def get_employee( min:int = 0, max:int = 100, employeer: shemas.employeer = None, db: Session = Depends(get_db)):
+async def get_employee(employeer: shemas.employeer = Depends(), db: Session = Depends(get_db)):
     try:
-        return crud.get_employee(employeer, min, max, db)
+        return crud.get_employee(employeer, db)
     except:
         raise HTTPException(status_code=500, detail="Server Error")
 

@@ -2,7 +2,7 @@ from pydantic import BaseModel
 
 
 class film(BaseModel):
-    idFilm: int
+    idFilm: int = None
     typeFilm: str = None
     nameFilm: str = None
     ageRating: int = None
@@ -11,5 +11,5 @@ class film(BaseModel):
 
 
 class genre_on_film(BaseModel):
-    idFilm: int
-    idGenre: int
+    idFilm: int = None
+    idGenre: int = None

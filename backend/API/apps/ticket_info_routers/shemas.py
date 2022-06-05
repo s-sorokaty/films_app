@@ -2,7 +2,7 @@ from datetime import datetime
 from pydantic import BaseModel
 
 class ticket(BaseModel):
-    idTransaction: int
+    idTransaction: int = None
     idSession: int = None
     idClient: int = None
     idEmployee: int = None

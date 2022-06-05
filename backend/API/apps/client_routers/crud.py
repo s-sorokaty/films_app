@@ -41,12 +41,15 @@ def update_client(client, db):
     db.commit()
 
 
-def get_client(client, min, max, db):
-    if client:
-        return db.query(models.client_info).get(client.idClient)
-    else:
-        return db.query(models.client_info).filter(
-            models.client_info.idClient >= min, models.client_info.idClient <= max).order_by(models.client_info.idClient).limit(100).all()
+def get_client(client, db):
+    query_db =  db.query(models.client_info)
+    for key in client:
+        if key[1]:
+            print(getattr(models.client_info, key[0]), key[1])
+            query_db = query_db.filter(
+                getattr(models.client_info, key[0]) == key[1]
+            )
+    return query_db.all() 
 
 
 def get_columns_descriptions(db):

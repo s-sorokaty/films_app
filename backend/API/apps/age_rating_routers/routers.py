@@ -44,7 +44,7 @@ async def update_age_raiting(age_raiting: shemas.age_rating_type, db: Session = 
 
 
 @router.get('/')
-async def get_age_raiting(age_raiting: shemas.age_rating_type = None, db: Session = Depends(get_db)):
+async def get_age_raiting(age_raiting: shemas.age_rating_type = Depends(), db: Session = Depends(get_db)):
     try:
         return crud.get_age_raiting(age_raiting, db)
     except:

@@ -41,11 +41,14 @@ def update_age_raiting(age_raiting, db):
 
 
 def get_age_raiting(age_raiting, db):
-    if age_raiting:
-        return db.query(models.age_rating_type).filter(
-            models.age_rating_type.ageRaiting == age_raiting.ageRaiting).first()
-    else:
-        return db.query(models.age_rating_type).limit(100).all()
+    query_db =  db.query(models.age_rating_type)
+    for key in age_raiting:
+        if key[1]:
+            print(getattr(models.age_rating_type, key[0]), key[1])
+            query_db = query_db.filter(
+                getattr(models.age_rating_type, key[0]) == key[1]
+            )
+    return query_db.all() 
 
 def get_columns_descriptions(db):
     return db.query(models.age_rating_type).statement.columns.keys()

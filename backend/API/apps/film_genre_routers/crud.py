@@ -38,11 +38,14 @@ def update_genre(genre, db):
 
 
 def get_genre(genre, db):
-    if genre:
-        return db.query(models.film_genre).filter(
-            models.film_genre.idGenre == genre.idGenre).first()
-    else:
-        return db.query(models.film_genre).limit(5).all()
+    query_db =  db.query(models.film_genre)
+    for key in genre:
+        if key[1]:
+            print(getattr(models.film_genre, key[0]), key[1])
+            query_db = query_db.filter(
+                getattr(models.film_genre, key[0]) == key[1]
+            )
+    return query_db.all()
 
 def get_columns_descriptions(db):
     return db.query(models.film_genre).statement.columns.keys()

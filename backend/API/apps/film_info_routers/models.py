@@ -17,7 +17,7 @@ class film_info(Base):
     idFilm = Column(Integer, primary_key=True, nullable=True)
     typeFilm = Column(VARCHAR(50), nullable=True)
     nameFilm = Column(VARCHAR(50), nullable=True)
-    ageRating = Column(Integer, ForeignKey(
+    ageRaiting = Column(Integer, ForeignKey(
         age_rating_type.ageRaiting), nullable=True)
     countryFilm = Column(VARCHAR(50), nullable=True)
     description = Column(VARCHAR(255), nullable=True)

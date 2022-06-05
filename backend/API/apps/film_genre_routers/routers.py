@@ -44,7 +44,7 @@ async def update_genre(genre: shemas.genre, db: Session = Depends(get_db)):
 
 
 @router.get('/')
-async def get_genre(genre: shemas.genre = None, db: Session = Depends(get_db)):
+async def get_genre(genre: shemas.genre = Depends(), db: Session = Depends(get_db)):
     try:
         return crud.get_genre(genre, db)
     except:

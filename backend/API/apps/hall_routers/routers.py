@@ -22,7 +22,6 @@ async def add_hall(hall: shemas.hall, db: Session = Depends(get_db)):
         crud.add_hall(hall, db)
         return "OK"
     except KeyError:
-        print(KeyError)
         raise HTTPException(status_code=500, detail="Server Error")
 
 
@@ -40,12 +39,13 @@ async def update_hall(hall: shemas.hall, db: Session = Depends(get_db)):
     try:
         crud.update_hall(hall, db)
         return "OK"
-    except:
+    except KeyError:
+        print(KeyError)
         raise HTTPException(status_code=500, detail="Server Error")
 
 
 @router.get('/')
-async def get_hall(hall: shemas.hall = None, db: Session = Depends(get_db)):
+async def get_hall(hall: shemas.hall = Depends(), db: Session = Depends(get_db)):
     try:
         return crud.get_hall(hall, db)
     except:

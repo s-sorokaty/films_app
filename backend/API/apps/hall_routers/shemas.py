@@ -2,6 +2,6 @@ from pydantic import BaseModel
 
 
 class hall(BaseModel):
-    idHall: int
-    idPlace: int = None
+    idHall: int = None
+    description: str = None
 

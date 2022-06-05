@@ -44,7 +44,7 @@ async def update_ticket(ticket: shemas.ticket, db: Session = Depends(get_db)):
 
 
 @router.get('/')
-async def get_ticket(ticket: shemas.ticket = None, db: Session = Depends(get_db)):
+async def get_ticket(ticket: shemas.ticket = Depends(), db: Session = Depends(get_db)):
     try:
         return crud.get_ticket(ticket, db)
     except KeyError:

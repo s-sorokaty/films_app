@@ -44,9 +44,9 @@ async def update_client(client: shemas.client, db: Session = Depends(get_db)):
 
 
 @router.get('/')
-async def get_client( min:int = 0, max:int = 100, client: shemas.client = None, db: Session = Depends(get_db)):
+async def get_client(client: shemas.client = Depends(), db: Session = Depends(get_db)):
     try:
-        return crud.get_client(client, min, max, db)
+        return crud.get_client(client, db)
     except KeyError:
         print(KeyError)
         raise HTTPException(status_code=500, detail="Server Error")

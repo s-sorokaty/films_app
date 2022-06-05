@@ -1,15 +1,15 @@
 from sqlalchemy.orm import Session
 from apps.hall_routers import shemas, models
 
+
 def create_db_hall(hall):
     return models.hall_info(
         idHall=hall.idHall,
-        idPlace=hall.idPlace
+        description=hall.description
     )
 
 
 def add_hall(hall, db):
-    print(hall)
     db_hall = create_db_hall(hall)
     db.add(db_hall)
     db.commit()
@@ -18,7 +18,8 @@ def add_hall(hall, db):
 
 def delete_hall(hall, db):
     db_hall = db.query(models.hall_info).filter(
-        models.hall_info.idHall == hall.idHall).first()
+        models.hall_info.idHall == hall.idHall,
+        models.hall_info.idPlace == hall.idPlace).first()
     if type(db_hall) == models.hall_info:
         db.delete(db_hall)
         db.commit()
@@ -30,19 +31,22 @@ def delete_hall(hall, db):
 def update_hall(hall, db):
     db_hall = create_db_hall(hall)
     db.query(models.hall_info).filter(
-        models.hall_info.idhall == hall.idhall)\
+        models.hall_info.idHall == hall.idHall)\
         .update({'idHall': db_hall.idHall,
-                 'idhall': db_hall.idhall
+                 'description': db_hall.description
                  })
     db.commit()
 
 
 def get_hall(hall, db):
-    if hall:
-        return db.query(models.hall_info).filter(
-            models.hall_info.idHall == hall.idHall).first()
-    else:
-        return db.query(models.hall_info).limit(5).all()
+    query_db =  db.query(models.hall_info)
+    for key in hall:
+        if key[1]:
+            print(getattr(models.hall_info, key[0]), key[1])
+            query_db = query_db.filter(
+                getattr(models.hall_info, key[0]) == key[1]
+            )
+    return query_db.all() 
 
 def get_columns_descriptions(db):
     return db.query(models.hall_info).statement.columns.keys()

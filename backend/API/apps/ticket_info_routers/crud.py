@@ -46,11 +46,14 @@ def update_ticket(ticket, db):
 
 
 def get_ticket(ticket, db):
-    if ticket:
-        return db.query(models.ticket_info).filter(
-            models.ticket_info.idTransaction == ticket.idTransaction).first()
-    else:
-        return db.query(models.ticket_info).limit(500).all()
+    query_db =  db.query(models.ticket_info)
+    for key in ticket:
+        if key[1]:
+            print(getattr(models.ticket_info, key[0]), key[1])
+            query_db = query_db.filter(
+                getattr(models.ticket_info, key[0]) == key[1]
+            )
+    return query_db.all() 
         
 def get_columns_descriptions(db):
     return db.query(models.ticket_info).statement.columns.keys()

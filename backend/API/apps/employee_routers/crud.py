@@ -43,14 +43,15 @@ def update_employee(employeer, db):
     db.commit()
 
 
-def get_employee(employeer, min, max, db):
-
-    if employeer:
-        return db.query(models.employee_info).filter(
-            models.employee_info.idEmployee == employeer.idEmployee).first()
-    else:
-        return db.query(models.employee_info).filter(
-            models.employee_info.idEmployee >= min, models.employee_info.idEmployee <= max).limit(5).all()
+def get_employee(employee, db):
+    query_db =  db.query(models.employee_info)
+    for key in employee:
+        if key[1]:
+            print(getattr(models.employee_info, key[0]), key[1])
+            query_db = query_db.filter(
+                getattr(models.employee_info, key[0]) == key[1]
+            )
+    return query_db.all() 
             
 
 def get_columns_descriptions(db):

@@ -42,11 +42,14 @@ def update_film(film, db):
 
 
 def get_film(film, db):
-    if film:
-        return db.query(models.film_info).filter(
-            models.film_info.idfilm == film.idfilm).first()
-    else:
-        return db.query(models.film_info).limit(5).all()
+    query_db =  db.query(models.film_info)
+    for key in film:
+        if key[1]:
+            print(getattr(models.film_info, key[0]), key[1])
+            query_db = query_db.filter(
+                getattr(models.film_info, key[0]) == key[1]
+            )
+    return query_db.all() 
 
 def create_db_genre(genre):
     return models.genre_on_film(
@@ -84,11 +87,14 @@ def update_genre(genre, db):
 
 
 def get_genre(genre, db):
-    if genre:
-        return db.query(models.genre_on_film).filter(
-            models.genre_on_film.idFilm == genre.idFilm).first()
-    else:
-        return db.query(models.genre_on_film).limit(5).all()
+    query_db =  db.query(models.genre_on_film)
+    for key in genre:
+        if key[1]:
+            print(getattr(models.genre_on_film, key[0]), key[1])
+            query_db = query_db.filter(
+                getattr(models.genre_on_film, key[0]) == key[1]
+            )
+    return query_db.all() 
 
 def get_film_columns_descriptions(db):
     return db.query(models.film_info).statement.columns.keys()

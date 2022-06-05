@@ -21,7 +21,7 @@ async def add_ticket(ticket: shemas.ticket, db: Session = Depends(get_db)):
     try:
         crud.add_ticket(ticket, db)
         return "OK"
-    except:
+    except KeyError:
         raise HTTPException(status_code=500, detail="Server Error")
 
 

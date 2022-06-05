@@ -1,15 +1,17 @@
 from sqlalchemy.orm import Session
 from apps.ticket_info_routers import shemas, models
-
+from datetime import datetime
 
 def create_db_ticket(ticket):
     return models.ticket_info(
         idTransaction=ticket.idTransaction,
         idSession=ticket.idSession,
         idEmployee=ticket.idEmployee,
+        idClient=ticket.idClient,
         idHall=ticket.idHall,
+        idPlace=ticket.idPlace,
         ticketCost=ticket.ticketCost,
-        startTime=ticket.startTime,
+        startTime=datetime.fromtimestamp(ticket.startTime),
     )
 
 
@@ -38,7 +40,9 @@ def update_ticket(ticket, db):
         .update({'idTransaction': db_ticket.idTransaction,
                  'idSession': db_ticket.idSession,
                  'idEmployee': db_ticket.idEmployee,
+                 'idClient': db_ticket.idClient,
                  'idHall': db_ticket.idHall,
+                 'idPlace': db_ticket.idPlace,
                  'ticketCost': db_ticket.ticketCost,
                  'startTime': db_ticket.startTime
                  })

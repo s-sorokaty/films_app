@@ -14,7 +14,7 @@ function SearchMenu(props) {
         query += coloumn + '=' + selectors[coloumn] + '&'
       }
     })
-    if (query.length == 1){
+    if (query.length === 1){
       query=''
     }
     API.get(selectableColoums[props.name] + query).then((res) => {
@@ -40,12 +40,15 @@ function SearchMenu(props) {
         </div>
         {searchResult.map(res => {
         let resObj = []
-        props.coloumns.map((coloumn, key) => resObj.push(<div className='elem' key={key}>{res[coloumn]}</div>))
+        props.coloumns.map((coloumn, key) => resObj.push(<div onClick={()=>{
+
+        }} className='elem' key={key}>{res[coloumn]}</div>))
         return <div className='resultObj' onClick={(e) => {
           props.setValue({
             name: props.name,
             value: res[props.name]
           })
+          props.setIsActive(!props.isActive)
         }}>{resObj}</div>
       })}</div>
     </div>

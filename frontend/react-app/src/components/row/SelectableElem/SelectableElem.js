@@ -17,7 +17,7 @@ function SelectableElem(props) {
     })
   }
 
-  const [data, setData] = useState('');
+  const [data, setData] = useState(props.value);
   const [isActive, setIsActive] = useState(false)
   const [coloumns, setColoumns] = useState(() => {
     getColumn()
@@ -33,8 +33,8 @@ function SelectableElem(props) {
   return (<>
     {(selectableColoums[props.name] == 'DATE')
       ? <input id="datetime" type="datetime-local" onChange={(e) => { setData(toTimestamp(e.target.value)) }} ></input>
-      : <><input onClick={() => setIsActive(!isActive)} value={props.value} ></input>
-        <SearchMenu setValue={(elem) => props.setValue(elem)} isActive={isActive} coloumns={coloumns} name={props.name}></SearchMenu>
+      : <><input onClick={() => setIsActive(!isActive)} onChange={()=>{console.log(props.value)}} value={props.value}></input>
+        <SearchMenu setIsActive = {()=>{setIsActive()}} setValue={(elem) => props.setValue(elem)} isActive={isActive} coloumns={coloumns} name={props.name}></SearchMenu>
       </>
     }
 

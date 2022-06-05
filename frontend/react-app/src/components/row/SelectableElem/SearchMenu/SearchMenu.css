@@ -1,13 +1,15 @@
 .searchMenu{
  background-color: red;
+ z-index: 500;
 }
 .result{
     height: 10px;
-    margin-top: 200%;
+    left: 0px;
+    position: fixed;
+    width: 20%;
 }
 .resultObj{
     display: inline-flex;
-    
     height: 200%;
     width: 200%;
 }

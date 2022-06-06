@@ -22,7 +22,6 @@ async def add_session(session_info: shemas.session_info, db: Session = Depends(g
         crud.add_session_info(session_info, db)
         return "OK"
     except KeyError:
-        print(KeyError)
         raise HTTPException(status_code=500, detail="Server Error")
 
 
@@ -64,8 +63,7 @@ async def add_film_on_session(film_on_session: shemas.film_on_session, db: Sessi
     try:
         crud.add_film_on_session(film_on_session, db)
         return "OK"
-    except KeyError:
-        print(KeyError)
+    except:
         raise HTTPException(status_code=500, detail="Server Error")
 
 

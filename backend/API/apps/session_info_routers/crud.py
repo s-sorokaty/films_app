@@ -7,8 +7,8 @@ def create_session_info(session_info):
     return models.session_info(
         idSession=session_info.idSession,
         idHall=session_info.idHall,
-        startTime=datetime.fromtimestamp(session_info.startTime) ,
-        endTime=datetime.fromtimestamp(session_info.endTime),
+        startTime=session_info.startTime,
+        endTime=session_info.endTime,
     )
 
 def add_session_info(session_info, db):

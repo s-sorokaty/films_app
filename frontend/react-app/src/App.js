@@ -102,7 +102,7 @@ function App() {
         <div className='userBar'>
           <button className='addButton' onClick={() => {
             const emptyObj = {}
-            coloums.map(obj => emptyObj[obj] = '')
+            coloums.map(obj => emptyObj[obj])
             if (!!coloums.length)
               setNewElems([emptyObj])
           }}> Добавить запись</button>

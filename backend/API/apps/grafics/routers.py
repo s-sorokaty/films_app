@@ -17,8 +17,9 @@ def get_db():
         db.close()
 
 @router.get('/')
-async def get(db: Session = Depends(get_db)):
-    # try:
-    return crud.get(db)
-    # except:
-    #     raise HTTPException(status_code=500, detail="Server Error")
+async def get_place_info(db: Session = Depends(get_db)):
+    crud.get_place_info(db)
+    crud.get_ticket_info(db)
+    crud.get_employee_info(db)
+    crud.get_client_info(db)
+

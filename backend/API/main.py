@@ -13,7 +13,7 @@ from apps.place_routers.routers import router as place_routers
 from apps.hall_routers.routers import router as hall_routers
 from apps.ticket_info_routers.routers import router as ticket_info_routers
 from apps.session_info_routers.routers import router as session_info_routers
-
+from apps.grafics.routers import router as grafics_router
 import routers as psql_db
 
 psql_db.init()
@@ -36,6 +36,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get(path='/main', response_class=HTMLResponse)
 def get_main_page(request: Request):
     return templates.TemplateResponse('index.html', {"request": request})
@@ -50,7 +51,6 @@ def get_api(request: Request):
 def get_main_script(request: Request):
     return templates.TemplateResponse('/main.js', {"request": request})
 
-
 app.include_router(employee_routers, prefix="/employee", tags=["employee"])
 app.include_router(hall_routers, prefix="/hall", tags=["hall_routers"])
 app.include_router(client_routers, prefix="/client", tags=["client"])
@@ -64,3 +64,5 @@ app.include_router(ticket_info_routers,
                    prefix="/ticket-info", tags=["ticket-info"])
 app.include_router(session_info_routers,
                    prefix="/session-info", tags=["session-info"])
+app.include_router(grafics_router,
+                   prefix="/grafics", tags=["grafics"])                  

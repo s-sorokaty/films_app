@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 from apps.place_routers import shemas, models
 
-
 def create_db_place(place):
     return models.place_info(
         idPlace=place.idPlace,

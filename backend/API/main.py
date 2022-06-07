@@ -14,6 +14,7 @@ from apps.hall_routers.routers import router as hall_routers
 from apps.ticket_info_routers.routers import router as ticket_info_routers
 from apps.session_info_routers.routers import router as session_info_routers
 from apps.grafics.routers import router as grafics_router
+from apps.reports.routers import router as report_router
 import routers as psql_db
 
 psql_db.init()
@@ -66,3 +67,5 @@ app.include_router(session_info_routers,
                    prefix="/session-info", tags=["session-info"])
 app.include_router(grafics_router,
                    prefix="/grafics", tags=["grafics"])                  
+app.include_router(report_router,
+                   prefix="/report", tags=["report"])                  

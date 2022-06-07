@@ -47,8 +47,7 @@ async def update_client(client: shemas.client, db: Session = Depends(get_db)):
 async def get_client(client: shemas.client = Depends(), db: Session = Depends(get_db)):
     try:
         return crud.get_client(client, db)
-    except KeyError:
-        print(KeyError)
+    except:
         raise HTTPException(status_code=500, detail="Server Error")
 
 @router.get('/coloums')

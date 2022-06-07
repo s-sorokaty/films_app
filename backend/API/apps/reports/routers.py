@@ -21,5 +21,8 @@ async def get_place_info(db: Session = Depends(get_db)):
     crud.generate_users_pdf(db)
     crud.generate_employee_pdf(db)
     crud.generate_genre_pdf(db)
+    crud.generate_film_pdf(db)
+    crud.generate_ticket_pdf(db)
+    crud.generate_genre_pdf(db)
     return "OK"
 

@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from datetime import datetime
 from apps.place_routers.models import place_info 
 from apps.ticket_info_routers.models import ticket_info
 import matplotlib.pyplot as plt
@@ -18,9 +19,11 @@ def get_place_info(db):
     fig.savefig('graphics/hall_info')
     return 'OK'
 
-def get_ticket_info(db):
+def get_ticket_info(db, min_date, max_date):
     ticket_data = db.query(ticket_info).all()
     ticket_df = pd.DataFrame([o.__dict__ for o in ticket_data])
+    ticket_df = ticket_df[(ticket_df['startTime'] >= min_date) & (ticket_df['startTime'] <= max_date)]
+    print(ticket_df)
     fig, ax = plt.subplots()
     ax.set_title('Продажи билетов') 
     ax.set_xlabel('цены за билет')

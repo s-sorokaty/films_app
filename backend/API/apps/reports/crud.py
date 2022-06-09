@@ -19,12 +19,16 @@ def generate_users_pdf(db):
     c.setFont(psfontname = 'FreeSans', size = 14)
     c.drawCentredString(250, 800,'Клиенты')
     height = 700
+    c.drawString(100, height+15, 'ID')
+    c.drawString(150, height+15, 'Имя')
+    c.drawString(300, height+15, 'Фамилия')
+    c.drawString(500, height+15, 'Номер')
     for obj in users:
          c.drawString(100, height, str(obj.idClient))
          c.drawString(150, height, str(obj.Name))
          c.drawString(300, height, str(obj.Surname))
          c.drawString(500, height, str(obj.phoneNumber))
-         height += 15
+         height -= 15
     c.save()
     return 'OK'
 
@@ -35,13 +39,17 @@ def generate_employee_pdf(db):
     pdfmetrics.registerFont(TTFont('FreeSans', 'FreeSans.ttf'))
     c.setFont(psfontname = 'FreeSans', size = 14)
     height = 700
+    c.drawString(100, height+15, 'ID')
+    c.drawString(150, height+15, 'Имя')
+    c.drawString(300, height+15, 'Фамилия')
+    c.drawString(500, height+15, 'Номер')
     c.drawString(250, 800,'Сотрудники')
     for obj in employee:
          c.drawString(100, height, str(obj.idEmployee))
          c.drawString(150, height, str(obj.Name))
          c.drawString(300, height, str(obj.Surname))
          c.drawString(500, height, str(obj.phoneNumber))
-         height += 15
+         height -= 15
     c.save()
     return "OK"
 
@@ -99,19 +107,26 @@ def generate_ticket_pdf(db):
     ticket_df = ticket_df[['idTransaction','idEmployee','ticketCost','startTime','Name','Surname','phoneNumber']]
     ticket_df = ticket_df.merge(employee_df, left_on='idEmployee', right_on='idEmployee')
     ticket_df = ticket_df[['idTransaction','ticketCost','startTime','Name_x','Surname_x','phoneNumber_x','Name_y','Surname_y','phoneNumber_y']]
-    height = 700
+   
     c.drawString(250, 800,'Билеты')
+    height = 700
+    c.drawString(50, height+40, 'ID')
+    c.drawString(70, height+40, 'Цена')
+    c.drawString(120, height+40, 'Дата продажи')
+    c.drawString(300, height+40, 'Клиент')    
+    c.drawString(400, height+40, 'Сотрудник')
+    
     for obj in ticket_df.iterrows():
          c.drawString(50, height, str(obj[1].idTransaction))
          c.drawString(70, height, str(obj[1].ticketCost))
          c.drawString(120, height, str(obj[1].startTime))
          c.drawString(300, height, str(obj[1].Name_x))
-         c.drawString(300, height+15, str(obj[1].Surname_x))
-         c.drawString(300, height+30, str(obj[1].phoneNumber_x))
+         c.drawString(300, height-15, str(obj[1].Surname_x))
+         c.drawString(300, height+15, str(obj[1].phoneNumber_x))
          c.drawString(400, height, str(obj[1].Name_y))
-         c.drawString(400, height+15, str(obj[1].Surname_y))
-         c.drawString(400, height+30, str(obj[1].phoneNumber_y))
-         height += 50
+         c.drawString(400, height-15, str(obj[1].Surname_y))
+         c.drawString(400, height+15, str(obj[1].phoneNumber_y))
+         height -= 50
     c.save()
     return "OK"
 

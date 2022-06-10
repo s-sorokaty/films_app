@@ -55,7 +55,6 @@ export const apiSelector = [
     { value: 'hall', label: 'Настройка залов', isSearching: false },
     { value: 'sessionInfo', label: 'Управление сессиями', isSearching: false },
     { value: 'filmOnSession', label: 'Настройка фильмов на сессии', isSearching: false },
-    
 ]
 export const API = {
     get: async (path, body = undefined) => {

@@ -5,7 +5,7 @@ import Select from 'react-select';
 import { apiPATH, apiSelector, API, apiSecondPATH } from './utils/api';
 import Notification from './components/notification/Notification';
 import { translate } from './utils/translate';
-
+import {Button} from '@chakra-ui/react'
 
 function App() {
 
@@ -86,9 +86,33 @@ function App() {
   return (
     <div className="wrap">
       <div className='mainHeader'>
+        <div>
         <div className='mainName'>Приложения для управления кинотеатром.</div>
+        </div>
       </div>
+        <Button className='fastButton' onClick={()=>{
+                        setData([])
+                        setIsRefrash(true)
+                        setSelectedOption(apiSelector[7])
+                        setNewElems([])
+                        setSelectors({})
+        }}>Билеты</Button>
+        <button className='fastButton' onClick={()=>{
+                        setData([])
+                        setIsRefrash(true)
+                        setSelectedOption(apiSelector[9])
+                        setNewElems([])
+                        setSelectors({})
+        }}>Сессия</button>
+        <button className='fastButton' onClick={()=>{
+                        setData([])
+                        setIsRefrash(true)
+                        setSelectedOption(apiSelector[10])
+                        setNewElems([])
+                        setSelectors({})
+        }}>Фильмы на сессии</button>
       <div className='main'>
+        
         <div className='elemScreen'>
           <div className='header'>{coloums.map((coloumn, key) => {
             return <div className='coloumnName' onClick={() => { 
@@ -100,18 +124,19 @@ function App() {
           )}
         </div>
         <div className='userBar'>
-          <button className='addButton' onClick={() => {
+          <Button className='addButton' onClick={() => {
             const emptyObj = {}
             coloums.map(obj => emptyObj[obj])
             if (!!coloums.length)
               setNewElems([emptyObj])
-          }}> Добавить запись</button>
+          }}> Добавить запись</Button>
           <div className='manageInfo'>{selectedOption.label}</div>
           <Select
             defaultValue={selectedOption}
             onChange={(option) => {
               setData([])
               setIsRefrash(true)
+              console.log({...option})
               setSelectedOption({ ...option })
               setNewElems([])
               setSelectors({})
@@ -125,12 +150,12 @@ function App() {
             setSelectors({...selectors, [obj]:e.target.value})
           }} placeholder={translate[obj]} value={selectors[obj]}></input></div>
         }))}
-        <button className='searchInput' onClick={()=>{refreshList()}}>Найти</button>
-        <button className='searchInput' onClick={()=>{
+        <Button className='searchInput' onClick={()=>{refreshList()}}>Найти</Button>
+        <Button className='searchInput' onClick={()=>{
           console.log(selectors)
           console.log(data)
           
-          }}>Селекторы</button>
+          }}>Селекторы</Button>
           </div>
         </div>
       </div>

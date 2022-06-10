@@ -2,6 +2,7 @@ import './SearchMenu.css'
 import { translate } from '../../../../utils/translate'
 import { API, selectableColoums } from '../../../../utils/api'
 import { useState } from 'react'
+import {Input} from '@chakra-ui/react'
 
 function SearchMenu(props) {
   const [searchResult, setSearchResult] = useState([])
@@ -28,9 +29,9 @@ function SearchMenu(props) {
     <div className='searchMenu' hidden={!props.isActive}>
       <div className='inputElems'>
         {props.coloumns.map(((obj, key) => {
-          return <div key={key}><div><input onChange={(e)=>{
+          return <div key={key}><div><Input onChange={(e)=>{
             setSelectors({...selectors, [obj]:e.target.value})
-          }} placeholder={translate[obj]}></input></div></div>
+          }} placeholder={translate[obj]}></Input></div></div>
         }))}
         <div><button onClick={() => { getElems() }}>Поиск</button></div>
       </div>

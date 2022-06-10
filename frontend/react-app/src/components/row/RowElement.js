@@ -3,6 +3,7 @@ import './RowElement.css';
 import { API, apiPATH, needInfo, selectableColoums } from '../../utils/api';
 import SelectableElem from './SelectableElem/SelectableElem';
 import { translate } from '../../utils/translate';
+import {Input} from '@chakra-ui/react'
 
 function RowElement(props) {
   const [extData, setExtData] = useState(()=>{
@@ -77,8 +78,8 @@ function RowElement(props) {
       <div className="elemContainer">
         {props.coloums.map((obj, key) => {
           if (!!selectableColoums[obj] && props.apiPath != selectableColoums[obj]) return <SelectableElem coloumn={props.coloums} name={obj} setValue={(elem) => { setData({ ...data, [elem.name]: elem.value }) }} className="coloumn" key={key} value={data[obj]}></SelectableElem>
-          return <input onChange={(e) => { setData({ ...data, [e.target.name]: e.target.value }) }}
-            className="coloumn" name={obj} key={key} value={data[obj]}></input>
+          return <Input onChange={(e) => { setData({ ...data, [e.target.name]: e.target.value }) }}
+            className="coloumn" name={obj} key={key} value={data[obj]}></Input>
         })}
         <button onClick={() => { addItem() }} className="manageButton">Подтвердить</button>
       </div>
@@ -103,10 +104,10 @@ function RowElement(props) {
         <div className="elemContainer">
           {props.coloums.map((obj, key) => {
             if (!!selectableColoums[obj] && props.apiPath != selectableColoums[obj]) return <SelectableElem coloumn={props.coloums} name={obj} setValue={(elem) => { setData({ ...data, [elem.name]: elem.value }) }} className="coloumn" key={key} value={data[obj]}></SelectableElem>
-            return <input
+            return <Input
               onChange={(e) => { setData({ ...data, [e.target.name]: e.target.value }) }}
               className="coloumn" key={key} name={obj} value={data[obj]}>
-            </input>
+            </Input>
           }
           )}
           <button onClick={() => {

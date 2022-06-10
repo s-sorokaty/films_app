@@ -20,7 +20,7 @@ export const translate = {
     ticketCost:'Цена за билет',
     idSession:'ID сессии',
     idTransaction:'ID транзакции',
-    startTime:'Время начала',
+    startTime:'Начало',
     idHall:'ID зала',
-    endTime:'Время окончания'
+    endTime:'Конец'
 }

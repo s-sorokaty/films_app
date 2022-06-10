@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { API, apiSecondPATH, selectableColoums } from '../../../utils/api'
 import SearchMenu from './SearchMenu/SearchMenu'
 import './SelectableElem.css'
+import {Input} from '@chakra-ui/react'
 
 function toTimestamp(strDate) {
   var datum = Date.parse(strDate);
@@ -32,8 +33,8 @@ function SelectableElem(props) {
 
   return (<>
     {(selectableColoums[props.name] == 'DATE')
-      ? <input id="datetime" type="datetime-local" onChange={(e) => { setData(e.target.value) } } value={props.value}></input>
-      : <><input onClick={() => setIsActive(!isActive)} onChange={()=>{console.log(props.value)}} value={props.value}></input>
+      ? <Input id="datetime" type="datetime-local" onChange={(e) => { setData(e.target.value) } } value={props.value}></Input>
+      : <><Input onClick={() => setIsActive(!isActive)} onChange={()=>{console.log(props.value)}} value={props.value}></Input>
         <SearchMenu setIsActive = {()=>{setIsActive()}} setValue={(elem) => props.setValue(elem)} isActive={isActive} coloumns={coloumns} name={props.name}></SearchMenu>
       </>
     }

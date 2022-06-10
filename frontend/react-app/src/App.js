@@ -5,7 +5,7 @@ import Select from 'react-select';
 import { apiPATH, apiSelector, API, apiSecondPATH } from './utils/api';
 import Notification from './components/notification/Notification';
 import { translate } from './utils/translate';
-import {Button} from '@chakra-ui/react'
+import { Button } from '@chakra-ui/react'
 
 function App() {
 
@@ -28,14 +28,14 @@ function App() {
 
   const refreshList = () => {
     let query = '?'
-    coloums.map(coloumn=>{
-      if (!!selectors[coloumn]){
+    coloums.map(coloumn => {
+      if (!!selectors[coloumn]) {
         query += coloumn + '=' + selectors[coloumn] + '&'
         setData([])
       }
     })
-    if (query.length === 1){
-      query=''
+    if (query.length === 1) {
+      query = ''
     }
     if (!!selectedOption.value)
       API.get(apiPATH[selectedOption.value] + query).then(res => {
@@ -87,35 +87,42 @@ function App() {
     <div className="wrap">
       <div className='mainHeader'>
         <div>
-        <div className='mainName'>Приложения для управления кинотеатром.</div>
+          <div className='mainName'>Приложения для управления кинотеатром.</div>
         </div>
       </div>
-        <Button className='fastButton' onClick={()=>{
-                        setData([])
-                        setIsRefrash(true)
-                        setSelectedOption(apiSelector[7])
-                        setNewElems([])
-                        setSelectors({})
-        }}>Билеты</Button>
-        <button className='fastButton' onClick={()=>{
-                        setData([])
-                        setIsRefrash(true)
-                        setSelectedOption(apiSelector[9])
-                        setNewElems([])
-                        setSelectors({})
-        }}>Сессия</button>
-        <button className='fastButton' onClick={()=>{
-                        setData([])
-                        setIsRefrash(true)
-                        setSelectedOption(apiSelector[10])
-                        setNewElems([])
-                        setSelectors({})
-        }}>Фильмы на сессии</button>
+      <Button className='fastButton' onClick={() => {
+        setData([])
+        setIsRefrash(true)
+        setSelectedOption(apiSelector[7])
+        setNewElems([])
+        setSelectors({})
+      }}>Билеты</Button>
+      <button className='fastButton' onClick={() => {
+        setData([])
+        setIsRefrash(true)
+        setSelectedOption(apiSelector[9])
+        setNewElems([])
+        setSelectors({})
+      }}>Сессия</button>
+      <button className='fastButton' onClick={() => {
+        setData([])
+        setIsRefrash(true)
+        setSelectedOption(apiSelector[10])
+        setNewElems([])
+        setSelectors({})
+      }}>Фильмы на сессии</button>
+      <button className='fastButton' onClick={() => {
+        setData([])
+        setIsRefrash(true)
+        setSelectedOption(apiSelector[4])
+        setNewElems([])
+        setSelectors({})
+      }}>Фильмы</button>
       <div className='main'>
-        
+
         <div className='elemScreen'>
           <div className='header'>{coloums.map((coloumn, key) => {
-            return <div className='coloumnName' onClick={() => { 
+            return <div className='coloumnName' onClick={() => {
               // sort(coloumn) 
             }} key={key}>{translate[coloumn]}</div>
           })}</div>
@@ -136,7 +143,7 @@ function App() {
             onChange={(option) => {
               setData([])
               setIsRefrash(true)
-              console.log({...option})
+              console.log({ ...option })
               setSelectedOption({ ...option })
               setNewElems([])
               setSelectors({})
@@ -145,17 +152,17 @@ function App() {
             className='manageSelector'
           ></Select>
           <div className='filterElement'>
-          {coloums.map(((obj, key) => {
-          return <div className = 'searchInput' key={key}><input  onChange={(e)=>{
-            setSelectors({...selectors, [obj]:e.target.value})
-          }} placeholder={translate[obj]} value={selectors[obj]}></input></div>
-        }))}
-        <Button className='searchInput' onClick={()=>{refreshList()}}>Найти</Button>
-        <Button className='searchInput' onClick={()=>{
-          console.log(selectors)
-          console.log(data)
-          
-          }}>Селекторы</Button>
+            {coloums.map(((obj, key) => {
+              return <div className='searchInput' key={key}><input onChange={(e) => {
+                setSelectors({ ...selectors, [obj]: e.target.value })
+              }} placeholder={translate[obj]} value={selectors[obj]}></input></div>
+            }))}
+            <Button className='searchInput' onClick={() => { refreshList() }}>Найти</Button>
+            <Button className='searchInput' onClick={() => {
+              console.log(selectors)
+              console.log(data)
+
+            }}>Селекторы</Button>
           </div>
         </div>
       </div>

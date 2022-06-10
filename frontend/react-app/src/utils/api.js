@@ -30,6 +30,18 @@ export const selectableColoums = {
     startTime:'DATE',
     endTime:'DATE'
 }
+export const needInfo = {
+    idClient: ['Name', 'Surname'],
+    idEmployee: ['Name', 'Surname'],
+    idPlace: ['placeType'],
+    ageRaiting: ['minAge'],
+    idGenre: ['genreFilm'],
+    idFilm: ['nameFilm', 'typeFilm'],
+    idHall: ['description'],
+    idSession:['startTime', 'endTime'],
+    startTime:'DATE',
+    endTime:'DATE'
+}
 
 export const apiSelector = [
     { value: 'employee', label: 'Управление Работниками', isSearching: false },

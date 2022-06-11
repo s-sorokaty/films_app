@@ -5,11 +5,14 @@ from apps.film_genre_routers import crud as genre_crud
 from apps.age_rating_routers import crud as age_rating_crud
 from apps.film_info_routers import crud as film_crud
 from apps.ticket_info_routers import crud as ticket_crud
+from apps.film_info_routers import crud as film_info_crud 
+
 from reportlab.pdfgen.canvas import Canvas
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 import pandas as pd
+
 
 
 def generate_users_pdf(db):
@@ -73,22 +76,38 @@ def generate_film_pdf(db):
     c.setFont(psfontname = 'FreeSans', size = 12)
     film_data = film_crud.get_film([], db)
     age_rating_data = age_rating_crud.get_age_raiting([], db)
+    genre_on_film = film_info_crud.get_genre([], db)
+    genre_info = genre_crud.get_genre([], db)
     film_df = pd.DataFrame([o.__dict__ for o in film_data])
     age_rating_df = pd.DataFrame([o.__dict__ for o in age_rating_data])
+    genre_on_film_df = pd.DataFrame([o.__dict__ for o in genre_on_film])
+    genre_info_df = pd.DataFrame([o.__dict__ for o in genre_info])
     film_df = film_df.merge(age_rating_df, left_on='ageRaiting', right_on='ageRaiting')
-    film_df = film_df[['idFilm','nameFilm','typeFilm','countryFilm','minAge','PGraiting','description_y','description_x']]
+    film_df = film_df[['idFilm','nameFilm','typeFilm','countryFilm','minAge','PGraiting','description_y','description_x', ]]
+    film_df = film_df.merge(genre_on_film_df, left_on='idFilm', right_on='idFilm')
+    film_df = film_df.merge(genre_info_df, left_on='idGenre', right_on='idGenre')
+    
+
     height = 700
+    
     c.drawString(250, 800,'Фильмы')
+    c.drawString(50, height+50, 'ID')
+    c.drawString(70, height+50, 'Название')
+    c.drawString(140, height+50,'Тип')
+    c.drawString(200, height+50,'Жанр')
+    c.drawString(250, height+50,'Страна')
+    c.drawString(320, height+50, 'Ограничение')
+    c.drawString(400, height+50, 'Описание фильма')
     for obj in film_df.iterrows():
          c.drawString(50, height, str(obj[1].idFilm))
          c.drawString(70, height, str(obj[1].nameFilm))
-         c.drawString(150, height, str(obj[1].typeFilm))
+         c.drawString(140, height, str(obj[1].typeFilm))
+         c.drawString(200, height, str(obj[1].genreFilm))
          c.drawString(250, height, str(obj[1].countryFilm))
-         c.drawString(300, height, str(obj[1].minAge))
-         c.drawString(300, height+15, str(obj[1].PGraiting))
-         c.drawString(350, height, str(obj[1].description_y))
-         c.drawString(450, height, str(obj[1].description_x))
-         height += 30
+         c.drawString(320, height-7, str(obj[1].minAge))
+         c.drawString(320, height+7, str(obj[1].PGraiting))
+         c.drawString(400, height, str(obj[1].description_y))
+         height -= 30
     c.save()
     return "OK"
 
@@ -99,7 +118,6 @@ def generate_ticket_pdf(db):
     user_data = users_crud.get_client([], db)
     employee_data = employee_crud.get_employee([], db)
     ticket_data = ticket_crud.get_ticket([], db)
-#     user_data = users_crud.get_client([], db)
     user_df = pd.DataFrame([o.__dict__ for o in user_data])
     employee_df = pd.DataFrame([o.__dict__ for o in employee_data])
     ticket_df = pd.DataFrame([o.__dict__ for o in ticket_data])
@@ -107,7 +125,7 @@ def generate_ticket_pdf(db):
     ticket_df = ticket_df[['idTransaction','idEmployee','ticketCost','startTime','Name','Surname','phoneNumber']]
     ticket_df = ticket_df.merge(employee_df, left_on='idEmployee', right_on='idEmployee')
     ticket_df = ticket_df[['idTransaction','ticketCost','startTime','Name_x','Surname_x','phoneNumber_x','Name_y','Surname_y','phoneNumber_y']]
-   
+    
     c.drawString(250, 800,'Билеты')
     height = 700
     c.drawString(50, height+40, 'ID')

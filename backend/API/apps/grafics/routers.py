@@ -24,3 +24,4 @@ async def get_place_info(min_date:datetime, max_date:datetime, db: Session = Dep
     crud.get_employee_info(db)
     crud.get_client_info(db)
     crud.get_film_info(db)
+    return 'OK'

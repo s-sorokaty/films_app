@@ -36,6 +36,7 @@ function SearchMenu(props) {
         <div><button onClick={() => { getElems() }}>Поиск</button></div>
       </div>
       <div className='result'>
+        Нажите на нужную запись
         <div className='resultObj'>
         {props.coloumns.map(coloumn=><div className='elem'>{translate[coloumn]}</div>)}
         </div>
@@ -50,7 +51,8 @@ function SearchMenu(props) {
           })
           props.setIsActive(!props.isActive)
         }}>{resObj}</div>
-      })}</div>
+      })}
+      </div>
     </div>
   </>
 

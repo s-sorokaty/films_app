@@ -5,7 +5,6 @@ from apps.ticket_info_routers.models import ticket_info
 from apps.client_routers.models import client_info
 from apps.session_info_routers.models import session_info, film_on_session
 from apps.film_info_routers.models import film_info
-
 from apps.employee_routers.models import employee_info
 
 
@@ -19,6 +18,7 @@ def get_place_info(db):
     ax.set_xlabel('ID зала')
     ax.set_ylabel('Качество места (Больше - лучше)')
     ax.scatter(x=place_df['idHall'], y=place_df['placeType'])
+    ax.xaxis.get_children()[1].set_size(1000)
     ax.legend()
     fig.savefig('graphics/hall_info')
     return 'OK'
@@ -33,7 +33,8 @@ def get_ticket_info(db, min_date, max_date):
     ax.set_title('Продажи билетов')
     ax.set_xlabel('цены за билет')
     ax.set_ylabel('дата продажи')
-    ax.scatter(x=ticket_df['startTime'], y=ticket_df['ticketCost'])
+    ax.scatter(x=ticket_df['startTime'], y=ticket_df['ticketCost'], alpha =0.1)
+    ax.xaxis.get_children()[1].set_size(1000)
     ax.legend()
     fig.savefig('graphics/ticket_info')
     return 'OK'
@@ -47,7 +48,7 @@ def get_employee_info(db):
 
     ticket_df = ticket_df.merge(
         employee_df, left_on='idEmployee', right_on='idEmployee')
-    ticket_df['All_name'] = ticket_df['Name'] + ' ' + ticket_df['Surname']
+    ticket_df['All_name'] = ticket_df['Name'] + '\n' + ticket_df['Surname']
     count = ticket_df['idEmployee'].value_counts()
     fig, ax = plt.subplots()
     print(ticket_df['All_name'])
@@ -55,7 +56,8 @@ def get_employee_info(db):
     ax.set_title('Продажи билетов')
     ax.set_xlabel('ID сотруднка')
     ax.set_ylabel('кол-во продаж')
-    ax.bar(pd.unique(ticket_df['All_name']), count.values)
+    ax.bar(pd.unique(ticket_df['All_name']), count.values, width=0.1)
+    ax.xaxis.get_children()[1].set_size(1000)
     ax.legend()
     fig.savefig('graphics/employee_info')
     return 'OK'
@@ -69,13 +71,14 @@ def get_client_info(db):
     ticket_df = ticket_df.merge(
         client_df, left_on='idClient', right_on='idClient')
     
-    ticket_df['All_name'] = ticket_df['Name'] + ' ' + ticket_df['Surname']
+    ticket_df['All_name'] = ticket_df['Name'] + '\n' + ticket_df['Surname']
     count = ticket_df['idClient'].value_counts()
     fig, ax = plt.subplots()
-    ax.bar(pd.unique(ticket_df['All_name']), count.values)
+    ax.bar(pd.unique(ticket_df['All_name']), count.values, width=0.1)
     ax.set_title('Продажи билетов')
     ax.set_xlabel('ID клиента')
     ax.set_ylabel('кол-во посещений')
+    # ax.set_xlim(0,20)
     ax.legend()
     fig.savefig('graphics/client_info')
     return 'OK'
@@ -103,7 +106,7 @@ def get_film_info(db):
     ax.set_title('Продажи билетов')
     ax.set_xlabel('название фильма')
     ax.set_ylabel('кол-во продаж')
-    ax.bar(ticket_df['nameFilm'], ticket_df['idTransaction'])
+    ax.bar(ticket_df['nameFilm'], ticket_df['idTransaction'], width=0.1)
     ax.legend()
     fig.savefig('graphics/films_tickets_info')
     return 'OK'

@@ -3,15 +3,18 @@
  z-index: 500;
 }
 .result{
-    height: 10px;
-    left: 0px;
-    position: fixed;
+
+    height: 20px;
+    left:0;
+    position: absolute;
     width: 20%;
+    background-color: rgb(185, 38, 28);
 }
 .resultObj{
     display: inline-flex;
     height: 200%;
     width: 200%;
+
 }
 .elem{
     border: 1px black solid;

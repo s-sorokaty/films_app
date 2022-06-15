@@ -118,14 +118,23 @@ function App() {
         setNewElems([])
         setSelectors({})
       }}>Фильмы</button>
+      <Button className='fastButton' onClick={()=>{
+        fetch('http://localhost:8080/report')
+      }}>
+        Сгенерировать отчеты
+      </Button>
+      <Button className='fastButton' onClick={()=>{
+        fetch('http://localhost:8080/grafics?min_date=2020-06-26T00:44:00&max_date=2024-06-26T00:44:00')
+      }}>Сгенерировать графики</Button>
       <div className='main'>
-
         <div className='elemScreen'>
           <div className='header'>{coloums.map((coloumn, key) => {
             return <div className='coloumnName' onClick={() => {
               // sort(coloumn) 
             }} key={key}>{translate[coloumn]}</div>
-          })}</div>
+          })}
+          <div className='freeSpace'>
+            </div></div>
           {data.map((obj, key) => <RowElement apiPath={apiPATH[selectedOption.value]} coloums={coloums} showNotification={showNotification} refrash={setIsRefrash} isEditing={false} isNew={false} data={obj} key={key} />)}
           {newElems.map((obj, key) => <RowElement apiPath={apiPATH[selectedOption.value]} coloums={coloums} showNotification={showNotification} refrash={setIsRefrash} data={obj} isNew={true} key={key}></RowElement>
           )}

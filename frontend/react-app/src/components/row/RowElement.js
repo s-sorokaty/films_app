@@ -99,7 +99,6 @@ function RowElement(props) {
           )}
           <button onClick={() => deleteItem()} className="manageButton">Удалить</button>
           <button onClick={() => setEditState(true)} className="manageButton">Изменить</button>
-          <button onClick={() => console.log(extData)} className="manageButton">Изменить</button>
         </div> :
         <div className="elemContainer">
           {props.coloums.map((obj, key) => {
@@ -110,6 +109,10 @@ function RowElement(props) {
             </Input>
           }
           )}
+          <button onClick={() => {
+            updateItem()
+            setEditState(false)
+          }} className="manageButton">Отменить</button>
           <button onClick={() => {
             updateItem()
             setEditState(false)

@@ -17,7 +17,7 @@ def get_place_info(db):
     ax.set_title('Расределение мест по залам')
     ax.set_xlabel('ID зала')
     ax.set_ylabel('Качество места (Больше - лучше)')
-    ax.scatter(x=place_df['idHall'], y=place_df['placeType'])
+    ax.scatter(x=place_df['idHall'], y=place_df['placeType'], alpha=0.1)
     ax.xaxis.get_children()[1].set_size(1000)
     ax.legend()
     fig.savefig('graphics/hall_info')
@@ -33,7 +33,7 @@ def get_ticket_info(db, min_date, max_date):
     ax.set_title('Продажи билетов')
     ax.set_xlabel('цены за билет')
     ax.set_ylabel('дата продажи')
-    ax.scatter(x=ticket_df['startTime'], y=ticket_df['ticketCost'], alpha =0.1)
+    ax.scatter(x=ticket_df['startTime'], y=ticket_df['ticketCost'], alpha=0.1)
     ax.xaxis.get_children()[1].set_size(1000)
     ax.legend()
     fig.savefig('graphics/ticket_info')
@@ -70,7 +70,7 @@ def get_client_info(db):
     client_df = pd.DataFrame([o.__dict__ for o in client_data])
     ticket_df = ticket_df.merge(
         client_df, left_on='idClient', right_on='idClient')
-    
+
     ticket_df['All_name'] = ticket_df['Name'] + '\n' + ticket_df['Surname']
     count = ticket_df['idClient'].value_counts()
     fig, ax = plt.subplots()
@@ -83,23 +83,25 @@ def get_client_info(db):
     fig.savefig('graphics/client_info')
     return 'OK'
 
+
 def get_film_info(db):
     ticket_data = db.query(ticket_info).all()
     ticket_df = pd.DataFrame([o.__dict__ for o in ticket_data])
     session_data = db.query(session_info).all()
-    film_data = db.query(film_info).all() 
+    film_data = db.query(film_info).all()
     session_df = pd.DataFrame([o.__dict__ for o in session_data])
-    
+
     ticket_df = ticket_df.merge(
         session_df, left_on='idSession', right_on='idSession')
-    
+
     film_on_session_data = db.query(film_on_session).all()
-    film_on_session_df = pd.DataFrame([o.__dict__ for o in film_on_session_data])
+    film_on_session_df = pd.DataFrame(
+        [o.__dict__ for o in film_on_session_data])
     # print(film_on_session_df)
     ticket_df = ticket_df.merge(
         film_on_session_df, left_on='idSession', right_on='idSession')
     film_df = pd.DataFrame([o.__dict__ for o in film_data])
-    print(ticket_df[['idTransaction','idFilm']])
+    print(ticket_df[['idTransaction', 'idFilm']])
     ticket_df = ticket_df.merge(
         film_df, left_on='idFilm', right_on='idFilm')
     fig, ax = plt.subplots()

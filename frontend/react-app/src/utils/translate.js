@@ -1,6 +1,6 @@
 export const translate = {
-    idClient: 'ID клиента',
-    idEmployee: 'ID работника',
+    idClient: 'Клиент',
+    idEmployee: 'Работник',
     Name: 'Имя',
     Surname: 'Фамилия',
     phoneNumber: 'Номер телефона',
@@ -8,11 +8,11 @@ export const translate = {
     PGraiting: 'Рейтинг по системе PG',
     minAge: 'Минимальный возвраст',
     description: 'Описание',
-    idGenre: 'ID жанра',
+    idGenre: 'Жанр',
     genreFilm: 'Название жанра',
-    idPlace:'ID места',
+    idPlace:'Место',
     placeType:'Тип места',
-    idFilm:'ID фильма',
+    idFilm:'Фильм',
     typeFilm:'Тип фильма',
     nameFilm:'Название',
     ageRating:'Возрастной рейтинг',
@@ -21,6 +21,6 @@ export const translate = {
     idSession:'ID сессии',
     idTransaction:'ID транзакции',
     startTime:'Начало',
-    idHall:'ID зала',
+    idHall:'Зал',
     endTime:'Конец'
 }

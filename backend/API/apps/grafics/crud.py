@@ -75,7 +75,7 @@ def get_client_info(db):
     count = ticket_df['idClient'].value_counts()
     fig, ax = plt.subplots()
     ax.bar(pd.unique(ticket_df['All_name']), count.values, width=0.1)
-    ax.set_title('Продажи билетов')
+    ax.set_title('Посещения')
     ax.set_xlabel('ID клиента')
     ax.set_ylabel('кол-во посещений')
     # ax.set_xlim(0,20)

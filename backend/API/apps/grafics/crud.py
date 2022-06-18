@@ -101,7 +101,7 @@ def get_film_info(db):
     ticket_df = ticket_df.merge(
         film_on_session_df, left_on='idSession', right_on='idSession')
     film_df = pd.DataFrame([o.__dict__ for o in film_data])
-    print(ticket_df[['idTransaction', 'idFilm']])
+    # print(ticket_df[['idTransaction', 'idFilm']])
     ticket_df = ticket_df.merge(
         film_df, left_on='idFilm', right_on='idFilm')
     fig, ax = plt.subplots()
